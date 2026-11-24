@@ -1,0 +1,3920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Melvin P. Exiomo — Technical Support &amp; Production Operations Specialist</title>
+  <meta name="description" content="Technical portfolio of Melvin P. Exiomo — L2 Technical Support and Production Operations Specialist focused on telecom SaaS, cloud infrastructure monitoring, distributed log analysis, and API diagnostics." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <!-- Three.js for lightweight 3D floating geometric cubes & p	olyhedra -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <style>
+    :root {
+      --bg-base: #07111F;
+      --bg-card: #0D1B2A;
+      --bg-panel: #13263A;
+      --glass-nav: rgba(7, 17, 31, 0.74);
+      --glass-card: rgba(13, 27, 42, 0.64);
+      --glass-panel: rgba(19, 38, 58, 0.54);
+      --glass-inset: rgba(10, 21, 36, 0.76);
+
+      --border: rgba(145, 164, 186, 0.16);
+      --border-strong: rgba(37, 131, 232, 0.42);
+      --specular: rgba(234, 242, 255, 0.08);
+
+      --blue: #2583E8;
+      --cyan: #20C5D9;
+      --text: #EAF2FF;
+      --muted: #91A4BA;
+
+      --ok: #10B981;
+      --warn: #F59E0B;
+      --err: #EF4444;
+
+      --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+      --shadow: 0 18px 42px rgba(3, 8, 17, 0.6);
+      --glow-blue: 0 0 22px rgba(37, 131, 232, 0.34);
+      --glow-cyan: 0 0 22px rgba(32, 197, 217, 0.32);
+      --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--sans);
+      background-color: var(--bg-base);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    body.modal-open {
+      overflow: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button, input, select {
+      font-family: inherit;
+    }
+
+    code, pre, .mono {
+      font-family: var(--mono);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* ========================================================================
+       LAYERED BACKGROUND: ATMOSPHERE + THREE.JS 3D + INFRA GRID + CURSOR GLOW
+       ======================================================================== */
+    .infra-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 60% 45% at 15% 10%, rgba(37, 131, 232, 0.13), transparent 70%),
+        radial-gradient(ellipse 55% 45% at 85% 30%, rgba(32, 197, 217, 0.09), transparent 70%),
+        radial-gradient(ellipse 65% 50% at 50% 85%, rgba(37, 131, 232, 0.08), transparent 75%);
+    }
+
+    #three-bg {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    .infra-grid {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background-image:
+        linear-gradient(to right, rgba(37, 131, 232, 0.045) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(37, 131, 232, 0.045) 1px, transparent 1px);
+      background-size: 44px 44px;
+    }
+
+    .cursor-glow {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background: radial-gradient(
+        520px circle at var(--gx, -500px) var(--gy, -500px),
+        rgba(37, 131, 232, 0.11),
+        rgba(32, 197, 217, 0.045) 38%,
+        transparent 70%
+      );
+      transition: opacity 0.3s ease;
+    }
+
+    main, section, footer {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ========================================================================
+       GLASSMORPHISM & INTERACTIVE HOVER CARDS
+       ======================================================================== */
+    .glass {
+      position: relative;
+      background: var(--glass-card);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow), inset 0 1px 0 var(--specular);
+    }
+
+    .hover-card {
+      position: relative;
+      transition:
+        transform 0.32s var(--ease-out),
+        border-color 0.28s ease,
+        box-shadow 0.32s var(--ease-out),
+        background-color 0.28s ease;
+      overflow: hidden;
+    }
+
+    .hover-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        340px circle at var(--mx, 50%) var(--my, 50%),
+        rgba(32, 197, 217, 0.11),
+        rgba(37, 131, 232, 0.05) 45%,
+        transparent 72%
+      );
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .hover-card:hover::before {
+      opacity: 1;
+    }
+
+    .hover-card:hover {
+      transform: translateY(-5px) scale(1.014);
+      border-color: var(--blue);
+      background-color: rgba(19, 38, 58, 0.62);
+      box-shadow:
+        0 20px 44px rgba(3, 8, 17, 0.7),
+        0 0 0 1px rgba(37, 131, 232, 0.38),
+        0 0 26px rgba(37, 131, 232, 0.2);
+    }
+
+    /* ========================================================================
+       STICKY GLASS HEADER & SCROLL PROGRESS
+       ======================================================================== */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 120;
+      background: var(--glass-nav);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .scroll-progress {
+      position: absolute;
+      left: 0;
+      bottom: -1px;
+      height: 2px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--blue), var(--cyan));
+      box-shadow: 0 0 10px rgba(32, 197, 217, 0.65);
+      transition: width 0.08s linear;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--mono);
+      font-weight: 600;
+      font-size: 0.88rem;
+      color: var(--text);
+    }
+
+    .brand-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 10px rgba(32, 197, 217, 0.85);
+    }
+
+    .brand-tag {
+      font-size: 0.66rem;
+      padding: 0.14rem 0.45rem;
+      border-radius: 4px;
+      background: rgba(32, 197, 217, 0.12);
+      border: 1px solid rgba(32, 197, 217, 0.35);
+      color: var(--cyan);
+      font-weight: 500;
+      box-shadow: 0 0 12px rgba(32, 197, 217, 0.16);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.35rem;
+      list-style: none;
+      font-size: 0.83rem;
+      font-weight: 500;
+      color: var(--muted);
+    }
+
+    .nav-links a {
+      position: relative;
+      padding: 0.3rem 0;
+      transition: color 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background: var(--cyan);
+      box-shadow: 0 0 8px rgba(32, 197, 217, 0.75);
+      transition: width 0.25s var(--ease-out);
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--text);
+    }
+
+    .nav-links a.active::after {
+      width: 100%;
+    }
+
+    .nav-btn {
+      padding: 0.42rem 0.88rem !important;
+      border-radius: 6px;
+      background: rgba(37, 131, 232, 0.16);
+      border: 1px solid rgba(37, 131, 232, 0.42);
+      color: var(--text) !important;
+      font-size: 0.8rem;
+      transition: background-color 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease !important;
+    }
+
+    .nav-btn::after {
+      display: none;
+    }
+
+    .nav-btn:hover {
+      background: var(--blue);
+      border-color: var(--cyan);
+      box-shadow: var(--glow-blue);
+    }
+
+    .menu-btn {
+      display: none;
+      background: var(--glass-panel);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.4rem 0.75rem;
+      border-radius: 6px;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      cursor: pointer;
+    }
+
+    /* ========================================================================
+       SCROLL-TRIGGERED ANIMATIONS
+       ======================================================================== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.65s var(--ease-out), transform 0.65s var(--ease-out);
+      transition-delay: var(--reveal-delay, 0ms);
+    }
+
+    .reveal.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-scale {
+      opacity: 0;
+      transform: scale(0.96) translateY(16px);
+      transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+      transition-delay: var(--reveal-delay, 0ms);
+    }
+
+    .reveal-scale.in-view {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal, .reveal-scale {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
+      .cursor-glow {
+        display: none !important;
+      }
+      html {
+        scroll-behavior: auto;
+      }
+    }
+
+    /* ========================================================================
+       SHARED SECTION LAYOUT & BUTTONS
+       ======================================================================== */
+    section.sec {
+      padding: 4.25rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sec-head {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 1rem;
+      margin-bottom: 1.85rem;
+    }
+
+    .sec-kicker {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--cyan);
+      display: block;
+      margin-bottom: 0.35rem;
+      text-shadow: 0 0 14px rgba(32, 197, 217, 0.35);
+    }
+
+    .sec-head h2 {
+      font-size: clamp(1.55rem, 2.8vw, 2.05rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    .sec-desc {
+      color: var(--muted);
+      font-size: 0.94rem;
+      max-width: 680px;
+      margin-top: 0.35rem;
+    }
+
+    .demo-banner {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--muted);
+      background: var(--glass-card);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(32, 197, 217, 0.24);
+      padding: 0.38rem 0.78rem;
+      border-radius: 6px;
+      box-shadow: 0 0 14px rgba(32, 197, 217, 0.1);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.76rem 1.35rem;
+      border-radius: 7px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s var(--ease-out);
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: var(--blue);
+      border-color: rgba(32, 197, 217, 0.35);
+      color: var(--text);
+      box-shadow: 0 4px 18px rgba(37, 131, 232, 0.32);
+    }
+
+    .btn-primary:hover {
+      background: #1f74d1;
+      border-color: var(--cyan);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 26px rgba(37, 131, 232, 0.5), 0 0 16px rgba(32, 197, 217, 0.32);
+    }
+
+    .btn-secondary {
+      background: var(--glass-panel);
+      backdrop-filter: blur(12px);
+      border-color: var(--border-strong);
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+      transform: translateY(-2px);
+      box-shadow: var(--glow-cyan);
+    }
+
+    /* ========================================================================
+       1. HERO SECTION
+       ======================================================================== */
+    .hero {
+      padding: 4rem 0 4.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.02fr 1.18fr;
+      gap: 2.25rem;
+      align-items: center;
+    }
+
+    .status-strip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-family: var(--mono);
+      font-size: 0.73rem;
+      color: var(--cyan);
+      background: rgba(32, 197, 217, 0.08);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(32, 197, 217, 0.32);
+      padding: 0.36rem 0.8rem;
+      border-radius: 6px;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 0 18px rgba(32, 197, 217, 0.14);
+    }
+
+    .pulse-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--ok);
+      box-shadow: 0 0 8px rgba(16, 185, 129, 0.8);
+      animation: pulse 2.2s infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 4.4vw, 3.25rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.08;
+      margin-bottom: 0.45rem;
+    }
+
+    .hero-role {
+      font-size: clamp(1.08rem, 2vw, 1.32rem);
+      font-weight: 600;
+      color: var(--blue);
+      margin-bottom: 1.1rem;
+      text-shadow: 0 0 22px rgba(37, 131, 232, 0.25);
+    }
+
+    .hero-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      margin-bottom: 1.65rem;
+      max-width: 560px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-meta-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .meta-chip {
+      font-family: var(--mono);
+      font-size: 0.71rem;
+      color: var(--muted);
+      background: var(--glass-card);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border);
+      padding: 0.28rem 0.62rem;
+      border-radius: 5px;
+      transition: border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .meta-chip:hover {
+      border-color: rgba(32, 197, 217, 0.45);
+      color: var(--text);
+      box-shadow: 0 0 12px rgba(32, 197, 217, 0.16);
+    }
+
+    .hero-dash {
+      border-radius: 10px;
+      overflow: hidden;
+      border-color: rgba(37, 131, 232, 0.3);
+      box-shadow: var(--shadow), 0 0 28px rgba(37, 131, 232, 0.12);
+    }
+
+    .dash-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.65rem 1rem;
+      background: var(--glass-panel);
+      border-bottom: 1px solid var(--border);
+      font-family: var(--mono);
+      font-size: 0.71rem;
+      color: var(--muted);
+    }
+
+    .dash-topbar strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .dash-body {
+      padding: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .mini-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.6rem;
+    }
+
+    .mini-kpi {
+      background: var(--glass-inset);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.6rem 0.7rem;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .mini-kpi:hover {
+      border-color: rgba(32, 197, 217, 0.4);
+      box-shadow: 0 0 14px rgba(32, 197, 217, 0.12);
+    }
+
+    .mini-kpi-lbl {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--muted);
+      margin-bottom: 0.2rem;
+    }
+
+    .mini-kpi-val {
+      font-family: var(--mono);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .mini-charts-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .panel-box {
+      background: var(--glass-inset);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.75rem;
+    }
+
+    .panel-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .panel-title span:first-child {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .util-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .bar-track {
+      height: 6px;
+      background: rgba(19, 38, 58, 0.7);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 0.4rem;
+    }
+
+    .bar-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      box-shadow: 0 0 10px rgba(32, 197, 217, 0.45);
+      transition: width 1.1s var(--ease-out);
+    }
+
+    .svc-health-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.5rem;
+    }
+
+    .svc-pill {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--glass-inset);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 0.42rem 0.6rem;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      transition: border-color 0.2s ease;
+    }
+
+    .svc-pill:hover {
+      border-color: rgba(32, 197, 217, 0.4);
+    }
+
+    .badge-ok { color: var(--ok); }
+    .badge-warn { color: var(--warn); }
+    .badge-err { color: var(--err); }
+    .badge-cyan { color: var(--cyan); }
+
+    /* ========================================================================
+       2. PROFESSIONAL EXPERIENCE (COMPACT ROLE GRID + TABBED A-E CONSOLE)
+       ======================================================================== */
+    .exp-history-grid {
+      display: grid;
+      grid-template-columns: 1.35fr 0.85fr 0.85fr;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .role-card {
+      border-radius: 10px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .role-featured {
+      border-color: rgba(37, 131, 232, 0.36);
+    }
+
+    .role-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .role-period {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--cyan);
+    }
+
+    .role-title {
+      font-size: 1.02rem;
+      font-weight: 600;
+      margin-bottom: 0.2rem;
+    }
+
+    .role-org {
+      font-size: 0.84rem;
+      color: var(--text);
+      opacity: 0.85;
+      margin-bottom: 0.65rem;
+    }
+
+    .role-summary {
+      font-size: 0.84rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    /* Compact Tabbed L2 Responsibilities Console (Categories A-E) */
+    .ops-console {
+      border-radius: 10px;
+      overflow: hidden;
+      border-color: var(--border-strong);
+    }
+
+    .ops-console-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      background: var(--glass-panel);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .ops-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .ops-tab {
+      background: var(--glass-inset);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 0.38rem 0.75rem;
+      border-radius: 6px;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      cursor: pointer;
+      transition: all 0.2s var(--ease-out);
+    }
+
+    .ops-tab:hover {
+      color: var(--text);
+      border-color: var(--cyan);
+    }
+
+    .ops-tab.active {
+      background: rgba(37, 131, 232, 0.24);
+      border-color: var(--cyan);
+      color: var(--text);
+      box-shadow: 0 0 14px rgba(32, 197, 217, 0.22);
+    }
+
+    .ops-view-all-btn {
+      background: transparent;
+      border: 1px solid var(--border-strong);
+      color: var(--cyan);
+      padding: 0.35rem 0.7rem;
+      border-radius: 6px;
+      font-family: var(--mono);
+      font-size: 0.71rem;
+      cursor: pointer;
+      transition: background-color 0.2s, box-shadow 0.2s;
+    }
+
+    .ops-view-all-btn:hover {
+      background: rgba(32, 197, 217, 0.12);
+      box-shadow: 0 0 12px rgba(32, 197, 217, 0.2);
+    }
+
+    .ops-console-body {
+      padding: 1.15rem 1.25rem;
+    }
+
+    .ops-pane {
+      display: none;
+    }
+
+    .ops-pane.active {
+      display: block;
+      animation: fadePanel 0.24s var(--ease-out);
+    }
+
+    .ops-pane-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .ops-pane-title h3 {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .ops-list-grid {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.55rem 1.25rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .ops-list-grid li {
+      position: relative;
+      padding-left: 1rem;
+    }
+
+    .ops-list-grid li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.62em;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 6px rgba(32, 197, 217, 0.75);
+    }
+
+    .ops-all-stack .ops-pane {
+      display: block !important;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .ops-all-stack .ops-pane:first-child {
+      padding-top: 0;
+    }
+
+    .ops-all-stack .ops-pane:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    /* ========================================================================
+       3. TECHNICAL SKILLS (6 CARDS = CLEAN 3x2 GRID)
+       ======================================================================== */
+    .legend-bar {
+      display: flex;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      align-items: center;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .skill-card {
+      border-radius: 10px;
+      padding: 1.25rem;
+    }
+
+    .skill-head {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .skill-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 7px;
+      background: rgba(37, 131, 232, 0.14);
+      border: 1px solid rgba(37, 131, 232, 0.34);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--cyan);
+      flex-shrink: 0;
+      transition: transform 0.32s var(--ease-out), border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+    }
+
+    .skill-icon svg {
+      transition: transform 0.32s var(--ease-out), filter 0.25s ease;
+    }
+
+    .skill-card:hover .skill-icon,
+    .skill-icon:hover {
+      transform: scale(1.12) rotate(-5deg);
+      border-color: var(--cyan);
+      background: rgba(32, 197, 217, 0.2);
+      box-shadow: 0 0 18px rgba(32, 197, 217, 0.4);
+    }
+
+    .skill-card:hover .skill-icon svg,
+    .skill-icon:hover svg {
+      transform: scale(1.08);
+      filter: drop-shadow(0 0 6px rgba(32, 197, 217, 0.85));
+    }
+
+    .skill-head h3 {
+      font-size: 0.98rem;
+      font-weight: 600;
+    }
+
+    .skill-items {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .skill-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.82rem;
+      background: var(--glass-inset);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 0.42rem 0.65rem;
+      transition: border-color 0.22s ease, transform 0.22s var(--ease-out), box-shadow 0.22s ease;
+    }
+
+    .skill-row:hover {
+      border-color: rgba(32, 197, 217, 0.45);
+      transform: translateX(3px);
+      box-shadow: 0 0 14px rgba(32, 197, 217, 0.14);
+    }
+
+    .lvl-hands {
+      font-family: var(--mono);
+      font-size: 0.66rem;
+      color: var(--cyan);
+      background: rgba(32, 197, 217, 0.1);
+      border: 1px solid rgba(32, 197, 217, 0.3);
+      padding: 0.12rem 0.45rem;
+      border-radius: 4px;
+    }
+
+    .lvl-found {
+      font-family: var(--mono);
+      font-size: 0.66rem;
+      color: var(--muted);
+      background: var(--glass-panel);
+      border: 1px solid var(--border);
+      padding: 0.12rem 0.45rem;
+      border-radius: 4px;
+    }
+
+    /* ========================================================================
+       4. PROJECTS & INTERACTIVE OBSERVABILITY LAB (UNIFIED SECTION)
+       ======================================================================== */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .proj-card {
+      border-radius: 10px;
+      padding: 1.3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      cursor: pointer;
+    }
+
+    .proj-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .proj-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      background: rgba(37, 131, 232, 0.12);
+      border: 1px solid rgba(37, 131, 232, 0.32);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--cyan);
+      transition: transform 0.28s var(--ease-out), box-shadow 0.28s ease, border-color 0.28s ease;
+    }
+
+    .proj-card:hover .proj-icon {
+      transform: scale(1.1) rotate(4deg);
+      border-color: var(--cyan);
+      box-shadow: 0 0 14px rgba(32, 197, 217, 0.38);
+    }
+
+    .proj-status {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      padding: 0.16rem 0.5rem;
+      border-radius: 4px;
+    }
+
+    .lab-subhead {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .lab-shell {
+      border-radius: 10px;
+      overflow: hidden;
+      border-color: var(--border-strong);
+      box-shadow: var(--shadow), 0 0 30px rgba(37, 131, 232, 0.12);
+    }
+
+    .lab-nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.65rem 1rem;
+      background: var(--glass-panel);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .lab-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .lab-tab {
+      background: var(--glass-inset);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 0.45rem 0.9rem;
+      border-radius: 6px;
+      font-family: var(--mono);
+      font-size: 0.76rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.22s var(--ease-out);
+    }
+
+    .lab-tab:hover {
+      color: var(--text);
+      border-color: var(--cyan);
+    }
+
+    .lab-tab.active {
+      background: rgba(37, 131, 232, 0.24);
+      border-color: var(--cyan);
+      color: var(--text);
+      box-shadow: 0 0 16px rgba(32, 197, 217, 0.22);
+    }
+
+    .lab-panel {
+      display: none;
+      padding: 1rem;
+    }
+
+    .lab-panel.active {
+      display: block;
+      animation: fadePanel 0.28s var(--ease-out);
+    }
+
+    @keyframes fadePanel {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .graf-controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.85rem;
+      padding: 0.6rem 0.85rem;
+      background: var(--glass-inset);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-family: var(--mono);
+      font-size: 0.74rem;
+    }
+
+    .ctrl-group {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .ctrl-select {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.3rem 0.55rem;
+      border-radius: 5px;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      outline: none;
+    }
+
+    .ctrl-select:focus {
+      border-color: var(--cyan);
+    }
+
+    .time-btns {
+      display: inline-flex;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 2px;
+      gap: 2px;
+    }
+
+    .t-btn {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      padding: 0.25rem 0.55rem;
+      border-radius: 4px;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      cursor: pointer;
+    }
+
+    .t-btn.active {
+      background: var(--blue);
+      color: var(--text);
+      box-shadow: 0 0 12px rgba(37, 131, 232, 0.45);
+    }
+
+    .graf-stat-strip {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 0.65rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .stat-tile {
+      background: var(--glass-inset);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.65rem 0.75rem;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .stat-tile:hover {
+      border-color: rgba(32, 197, 217, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .stat-tile-lbl {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--muted);
+      margin-bottom: 0.2rem;
+    }
+
+    .stat-tile-val {
+      font-family: var(--mono);
+      font-size: 1.15rem;
+      font-weight: 600;
+    }
+
+    .graf-charts-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.85rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .chart-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--muted);
+      margin-top: 0.45rem;
+    }
+
+    .svc-table-wrap {
+      overflow-x: auto;
+      background: var(--glass-inset);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+
+    table.obs-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--mono);
+      font-size: 0.73rem;
+      text-align: left;
+    }
+
+    .obs-table th, .obs-table td {
+      padding: 0.55rem 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .obs-table th {
+      background: var(--glass-panel);
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .obs-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .vlogs-query-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .query-input {
+      flex: 1;
+      min-width: 240px;
+      background: var(--glass-inset);
+      border: 1px solid var(--border-strong);
+      color: var(--cyan);
+      padding: 0.52rem 0.8rem;
+      border-radius: 6px;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      outline: none;
+    }
+
+    .query-input:focus {
+      border-color: var(--cyan);
+      box-shadow: 0 0 14px rgba(32, 197, 217, 0.22);
+    }
+
+    .quick-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .q-chip {
+      background: var(--glass-inset);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 0.25rem 0.6rem;
+      border-radius: 5px;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .q-chip:hover {
+      border-color: var(--cyan);
+      color: var(--text);
+    }
+
+    .log-row {
+      cursor: pointer;
+      transition: background-color 0.15s;
+    }
+
+    .log-row:hover {
+      background: rgba(37, 131, 232, 0.12);
+    }
+
+    .sev-tag {
+      display: inline-block;
+      padding: 0.12rem 0.42rem;
+      border-radius: 4px;
+      font-size: 0.66rem;
+      font-weight: 600;
+    }
+
+    .sev-ERROR {
+      background: rgba(239, 68, 68, 0.14);
+      color: var(--err);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+    }
+
+    .sev-WARN {
+      background: rgba(245, 158, 11, 0.14);
+      color: var(--warn);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+    }
+
+    .sev-INFO {
+      background: rgba(32, 197, 217, 0.12);
+      color: var(--cyan);
+      border: 1px solid rgba(32, 197, 217, 0.3);
+    }
+
+    .log-expand-row {
+      background: rgba(7, 17, 31, 0.85);
+    }
+
+    .log-expand-box {
+      padding: 0.75rem 0.9rem;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--text);
+      white-space: pre-wrap;
+      line-height: 1.55;
+      border-left: 2px solid var(--cyan);
+    }
+
+    .os-layout {
+      display: grid;
+      grid-template-columns: 0.72fr 1.65fr 0.95fr;
+      gap: 0.85rem;
+      align-items: start;
+    }
+
+    .os-sidebar {
+      background: var(--glass-inset);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .os-facet-title {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--cyan);
+      margin-bottom: 0.4rem;
+    }
+
+    .facet-btn {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--muted);
+      padding: 0.28rem 0.45rem;
+      border-radius: 4px;
+      font-family: var(--mono);
+      font-size: 0.71rem;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.18s;
+    }
+
+    .facet-btn:hover,
+    .facet-btn.active {
+      background: var(--glass-panel);
+      border-color: var(--border-strong);
+      color: var(--text);
+    }
+
+    .os-histogram {
+      background: var(--glass-inset);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.75rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .os-json-panel {
+      background: var(--glass-inset);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.8rem;
+    }
+
+    .os-json-pre {
+      font-family: var(--mono);
+      font-size: 0.71rem;
+      line-height: 1.55;
+      color: var(--text);
+      white-space: pre-wrap;
+      word-break: break-word;
+      max-height: 360px;
+      overflow-y: auto;
+    }
+
+    /* ========================================================================
+       5. TECHNICAL CASE STUDIES (2-COL GRID + FEATURED SPAN-2 = ZERO ORPHAN)
+       ======================================================================== */
+    .cases-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .case-card {
+      border-radius: 10px;
+      padding: 1.35rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      cursor: pointer;
+    }
+
+    .case-card.case-featured {
+      grid-column: span 2;
+      display: grid;
+      grid-template-columns: 1.35fr 0.85fr;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .case-featured-snippet {
+      background: var(--glass-inset);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 0.95rem 1.05rem;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .case-num-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+    }
+
+    .case-card h3 {
+      font-size: 1.06rem;
+      line-height: 1.35;
+    }
+
+    .case-card p {
+      font-size: 0.86rem;
+      color: var(--muted);
+    }
+
+    .tool-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tool-tag {
+      font-family: var(--mono);
+      font-size: 0.69rem;
+      padding: 0.18rem 0.5rem;
+      border-radius: 4px;
+      background: var(--glass-inset);
+      border: 1px solid var(--border);
+      color: var(--text);
+      transition: border-color 0.2s ease;
+    }
+
+    .hover-card:hover .tool-tag {
+      border-color: rgba(37, 131, 232, 0.38);
+    }
+
+    .case-cta {
+      margin-top: auto;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border);
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      color: var(--cyan);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* ========================================================================
+       6. TECHNICAL WORKFLOW ARCHITECTURE DIAGRAM
+       ======================================================================== */
+    .workflow-diagram {
+      display: flex;
+      align-items: stretch;
+      gap: 0.45rem;
+      margin-bottom: 1rem;
+    }
+
+    .wf-node {
+      flex: 1;
+      border-radius: 8px;
+      padding: 1rem;
+      cursor: pointer;
+      transition: border-color 0.25s ease, background-color 0.25s ease, transform 0.25s var(--ease-out), box-shadow 0.25s ease;
+      text-align: left;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .wf-node:hover,
+    .wf-node.active {
+      border-color: var(--cyan);
+      background: var(--glass-panel);
+      transform: translateY(-3px);
+      box-shadow: var(--glow-cyan);
+    }
+
+    .wf-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--blue);
+      flex-shrink: 0;
+      padding: 0 0.1rem;
+      filter: drop-shadow(0 0 6px rgba(37, 131, 232, 0.5));
+    }
+
+    .wf-step-num {
+      font-family: var(--mono);
+      font-size: 0.67rem;
+      color: var(--cyan);
+    }
+
+    .wf-step-title {
+      font-size: 0.89rem;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .wf-step-sub {
+      font-size: 0.77rem;
+      color: var(--muted);
+    }
+
+    .wf-detail-bar {
+      border-radius: 8px;
+      padding: 1.05rem 1.25rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      border-color: var(--border-strong);
+      box-shadow: var(--shadow), 0 0 22px rgba(37, 131, 232, 0.12);
+    }
+
+    /* ========================================================================
+       7. ABOUT ME & EDUCATION
+       ======================================================================== */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.35fr 0.85fr;
+      gap: 1.25rem;
+    }
+
+    .card {
+      border-radius: 10px;
+      padding: 1.45rem;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+
+    .about-text p:last-child {
+      margin-bottom: 0;
+    }
+
+    .about-text strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .focus-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+      margin-top: 1.2rem;
+    }
+
+    .focus-list li {
+      font-size: 0.85rem;
+      color: var(--text);
+      background: var(--glass-inset);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.55rem 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: border-color 0.22s ease, transform 0.22s var(--ease-out), box-shadow 0.22s ease;
+    }
+
+    .focus-list li:hover {
+      border-color: rgba(32, 197, 217, 0.45);
+      transform: translateX(3px);
+      box-shadow: 0 0 14px rgba(32, 197, 217, 0.14);
+    }
+
+    .focus-list li svg {
+      color: var(--cyan);
+      flex-shrink: 0;
+      filter: drop-shadow(0 0 6px rgba(32, 197, 217, 0.45));
+    }
+
+    .creds-side {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .cred-mini {
+      border-radius: 8px;
+      padding: 0.9rem 1.05rem;
+    }
+
+    .cred-mini-kicker {
+      font-family: var(--mono);
+      font-size: 0.67rem;
+      color: var(--cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      margin-bottom: 0.25rem;
+    }
+
+    .cred-mini-title {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .cred-mini-sub {
+      font-size: 0.81rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
+    }
+
+    /* ========================================================================
+       8. CONTACT & FOOTER
+       ======================================================================== */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 1.25rem;
+    }
+
+    .contact-links {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+      margin-top: 1.25rem;
+    }
+
+    .c-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      background: var(--glass-inset);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 0.75rem 0.95rem;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--text);
+      cursor: pointer;
+      transition: border-color 0.22s ease, color 0.22s ease, box-shadow 0.22s ease, transform 0.22s var(--ease-out);
+    }
+
+    .c-link:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+      transform: translateY(-2px);
+      box-shadow: var(--glow-cyan);
+    }
+
+    .remote-card {
+      border-radius: 10px;
+      padding: 1.35rem;
+    }
+
+    .remote-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      margin-top: 0.85rem;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    footer {
+      padding: 2rem 0;
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      color: var(--muted);
+    }
+
+    .footer-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    /* ========================================================================
+       GLASSMORPHIC MODALS
+       ======================================================================== */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 400;
+      background: rgba(4, 10, 18, 0.74);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+      animation: fadePanel 0.22s var(--ease-out);
+    }
+
+    .modal-box {
+      width: 100%;
+      max-width: 920px;
+      max-height: 90vh;
+      background: rgba(13, 27, 42, 0.88);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      border: 1px solid var(--border-strong);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: var(--shadow), 0 0 32px rgba(37, 131, 232, 0.16), inset 0 1px 0 var(--specular);
+    }
+
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.95rem 1.35rem;
+      background: var(--glass-panel);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .modal-close {
+      background: var(--glass-inset);
+      border: 1px solid var(--border);
+      color: var(--text);
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .modal-close:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+    }
+
+    .modal-body {
+      padding: 1.35rem;
+      overflow-y: auto;
+    }
+
+    .modal-footer-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.85rem 1.35rem;
+      background: var(--glass-panel);
+      border-top: 1px solid var(--border);
+    }
+
+    .cs-detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+    }
+
+    .cs-block {
+      background: var(--glass-inset);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.9rem 1rem;
+    }
+
+    .cs-block-full {
+      grid-column: span 2;
+    }
+
+    .cs-lbl {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--cyan);
+      margin-bottom: 0.4rem;
+    }
+
+    .cs-block p, .cs-block li {
+      font-size: 0.86rem;
+      color: var(--muted);
+    }
+
+    .cs-block ol {
+      padding-left: 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .gui-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .gui-input {
+      width: 100%;
+      background: var(--glass-inset);
+      border: 1px solid var(--border-strong);
+      color: var(--text);
+      padding: 0.48rem 0.7rem;
+      border-radius: 6px;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      outline: none;
+    }
+
+    .gui-input:focus {
+      border-color: var(--cyan);
+      box-shadow: 0 0 12px rgba(32, 197, 217, 0.2);
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 1024px) {
+      .hero-grid,
+      .about-grid,
+      .contact-grid,
+      .os-layout,
+      .exp-history-grid,
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+      .case-card.case-featured {
+        grid-template-columns: 1fr;
+      }
+      .graf-stat-strip {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .workflow-diagram {
+        flex-direction: column;
+      }
+      .wf-arrow {
+        transform: rotate(90deg);
+        padding: 0.15rem 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: rgba(7, 17, 31, 0.96);
+        backdrop-filter: blur(18px);
+        border-bottom: 1px solid var(--border);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1.15rem 1.5rem;
+        gap: 0.9rem;
+      }
+      .nav-links.open {
+        display: flex;
+      }
+      .menu-btn {
+        display: block;
+      }
+      .mini-kpi-grid,
+      .svc-health-strip,
+      .graf-stat-strip {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .mini-charts-row,
+      .util-row,
+      .graf-charts-grid,
+      .focus-list,
+      .contact-links,
+      .cs-detail-grid,
+      .gui-grid,
+      .projects-grid,
+      .cases-grid,
+      .ops-list-grid {
+        grid-template-columns: 1fr;
+      }
+      .case-card.case-featured,
+      .cs-block-full {
+        grid-column: span 1;
+      }
+    }
+
+    @media print {
+      header, .infra-backdrop, #three-bg, .infra-grid, .cursor-glow, section, footer, .modal-footer-nav {
+        display: none !important;
+      }
+      .modal-backdrop.open {
+        position: static;
+        background: #ffffff;
+        padding: 0;
+      }
+      .modal-box {
+        max-height: none;
+        box-shadow: none;
+        border: none;
+        background: #ffffff;
+        color: #111111;
+      }
+      .modal-head {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="infra-backdrop" aria-hidden="true"></div>
+  <canvas id="three-bg" aria-hidden="true"></canvas>
+  <div class="infra-grid" aria-hidden="true"></div>
+  <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+
+  <!-- Sticky Glass Navigation (Matches Recommended Section Order) -->
+  <header>
+    <div class="container nav">
+      <a href="#top" class="brand">
+        <span class="brand-dot"></span>
+        <span>melvin.exiomo</span>
+        <span class="brand-tag">L2 OPS</span>
+      </a>
+      <button class="menu-btn" id="menuBtn" aria-label="Toggle Menu">Menu</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#experience" data-spy="experience">Experience</a></li>
+        <li><a href="#skills" data-spy="skills">Skills</a></li>
+        <li><a href="#projects" data-spy="projects">Projects &amp; Lab</a></li>
+        <li><a href="#case-studies" data-spy="case-studies">Case Studies</a></li>
+        <li><a href="#workflow" data-spy="workflow">Workflow</a></li>
+        <li><a href="#about" data-spy="about">About</a></li>
+        <li><a href="#contact" data-spy="contact" class="nav-btn">Contact</a></li>
+      </ul>
+    </div>
+    <div class="scroll-progress" id="scrollProgress"></div>
+  </header>
+
+  <!-- 1. HERO SECTION -->
+  <section class="hero" id="top">
+    <div class="container hero-grid">
+      <div class="reveal in-view">
+        <div class="status-strip">
+          <span class="pulse-dot"></span>
+          <span>Production Support | Infrastructure Monitoring | Log Analysis</span>
+        </div>
+        <h1>Melvin P. Exiomo</h1>
+        <div class="hero-role">Technical Support &amp; Production Operations Specialist</div>
+        <p class="hero-sub">
+          Monitoring production environments, investigating application failures, analyzing distributed system logs, and supporting reliable service operations.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#projects" class="btn btn-primary">Explore My Work</a>
+          <button class="btn btn-secondary" id="openResumeBtn">Download Resume</button>
+        </div>
+
+        <div class="hero-meta-chips">
+          <span class="meta-chip">General Santos City, PH (Remote)</span>
+          <span class="meta-chip">US Business Hours Ready</span>
+          <span class="meta-chip">Telecom &amp; Distributed SaaS</span>
+          <span class="meta-chip">PII-Safe Diagnostics</span>
+        </div>
+      </div>
+
+      <!-- Hero Right: ops-monitor Widget -->
+      <div class="hero-dash glass hover-card reveal-scale in-view" aria-label="Illustrative Infrastructure Monitoring Widget">
+        <div class="dash-topbar">
+          <span><strong>ops-monitor</strong> // prod-telecom-cluster</span>
+          <span class="badge-cyan">ILLUSTRATIVE SAMPLE DATA</span>
+        </div>
+        <div class="dash-body">
+          <div class="mini-kpi-grid">
+            <div class="mini-kpi">
+              <div class="mini-kpi-lbl">Availability</div>
+              <div class="mini-kpi-val badge-ok">99.94%</div>
+            </div>
+            <div class="mini-kpi">
+              <div class="mini-kpi-lbl">HTTP 2xx</div>
+              <div class="mini-kpi-val badge-cyan">99.41%</div>
+            </div>
+            <div class="mini-kpi">
+              <div class="mini-kpi-lbl">HTTP 5xx</div>
+              <div class="mini-kpi-val badge-warn">0.12%</div>
+            </div>
+            <div class="mini-kpi">
+              <div class="mini-kpi-lbl">API p95</div>
+              <div class="mini-kpi-val">142ms</div>
+            </div>
+          </div>
+
+          <div class="mini-charts-row">
+            <div class="panel-box">
+              <div class="panel-title">
+                <span>Service Availability &amp; 2xx</span>
+                <span class="badge-ok">15m</span>
+              </div>
+              <svg viewBox="0 0 240 68" width="100%" height="68" aria-label="Service Availability Graph">
+                <line x1="0" y1="18" x2="240" y2="18" stroke="rgba(145,164,186,0.14)" stroke-dasharray="3 3" />
+                <line x1="0" y1="42" x2="240" y2="42" stroke="rgba(145,164,186,0.14)" stroke-dasharray="3 3" />
+                <path d="M0,22 L30,19 L60,21 L90,18 L120,20 L150,24 L180,17 L210,18 L240,16 L240,68 L0,68 Z" fill="rgba(32, 197, 217, 0.14)" />
+                <polyline points="0,22 30,19 60,21 90,18 120,20 150,24 180,17 210,18 240,16" fill="none" stroke="#20C5D9" stroke-width="2" />
+              </svg>
+            </div>
+
+            <div class="panel-box">
+              <div class="panel-title">
+                <span>API Response Time (p95 ms)</span>
+                <span class="badge-cyan">REST</span>
+              </div>
+              <svg viewBox="0 0 240 68" width="100%" height="68" aria-label="API Response Time Graph">
+                <line x1="0" y1="18" x2="240" y2="18" stroke="rgba(145,164,186,0.14)" stroke-dasharray="3 3" />
+                <line x1="0" y1="42" x2="240" y2="42" stroke="rgba(145,164,186,0.14)" stroke-dasharray="3 3" />
+                <polyline points="0,48 35,44 70,46 105,34 140,39 175,26 210,41 240,38" fill="none" stroke="#2583E8" stroke-width="2" />
+                <polyline points="0,56 35,54 70,55 105,50 140,52 175,46 210,53 240,51" fill="none" stroke="#91A4BA" stroke-width="1.3" stroke-dasharray="3 2" />
+              </svg>
+            </div>
+          </div>
+
+          <div class="util-row">
+            <div class="panel-box">
+              <div class="panel-title">
+                <span>CPU Utilization (Avg Node)</span>
+                <span>41.2%</span>
+              </div>
+              <div class="bar-track"><div class="bar-fill" data-target="41.2%" style="background: var(--blue);"></div></div>
+            </div>
+            <div class="panel-box">
+              <div class="panel-title">
+                <span>Memory Utilization</span>
+                <span>64.8%</span>
+              </div>
+              <div class="bar-track"><div class="bar-fill" data-target="64.8%" style="background: var(--cyan);"></div></div>
+            </div>
+          </div>
+
+          <div class="svc-health-strip">
+            <div class="svc-pill"><span>ocf-gw</span><span class="badge-ok">UP</span></div>
+            <div class="svc-pill"><span>esim-api</span><span class="badge-ok">UP</span></div>
+            <div class="svc-pill"><span>smdp-ext</span><span class="badge-warn">DEGR</span></div>
+            <div class="svc-pill"><span>kafka-q</span><span class="badge-ok">UP</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. PROFESSIONAL EXPERIENCE (MOVED UP FOR IMMEDIATE HIRING CREDIBILITY) -->
+  <section id="experience" class="sec">
+    <div class="container">
+      <div class="sec-head reveal">
+        <div>
+          <span class="sec-kicker">01 // Experience &amp; Production Operations</span>
+          <h2>Professional Experience</h2>
+          <p class="sec-desc">L2 Technical Support and Production Operations across telecom cloud platforms, high-CSAT omnichannel service, and operations coordination.</p>
+        </div>
+      </div>
+
+      <div class="exp-history-grid stagger-group">
+        <div class="role-card role-featured glass hover-card reveal">
+          <div class="role-head">
+            <span class="role-period">DEC 2023 &ndash; OCT 2026</span>
+            <span class="sev-tag sev-INFO">CORE L2 ROLE</span>
+          </div>
+          <div class="role-title">Technical Support Engineer | Cloud Infrastructure</div>
+          <div class="role-org">LotusFlare (DNO&trade; Cloud) &middot; Remote (Globe GFiber &amp; GOMO)</div>
+          <p class="role-summary">Owned Tier 2 production triage, Grafana/VictoriaMetrics telemetry monitoring, VictoriaLogs/OpenSearch trace correlation, Postman API recovery, and L3 engineering escalation across distributed telecom microservices.</p>
+        </div>
+
+        <div class="role-card glass hover-card reveal">
+          <div class="role-head">
+            <span class="role-period">SEP 2023 &ndash; NOV 2023</span>
+          </div>
+          <div class="role-title">Customer Service Representative (L1)</div>
+          <div class="role-org">Sixeleven Global Services Inc.</div>
+          <p class="role-summary">Delivered omnichannel support (chat, email, SMS) maintaining 93%+ QA and 90%+ CSAT using Missive, Pipedrive, and Microsoft 365.</p>
+        </div>
+
+        <div class="role-card glass hover-card reveal">
+          <div class="role-head">
+            <span class="role-period">JAN 2023 &ndash; JUN 2024</span>
+          </div>
+          <div class="role-title">Industry Specialist &amp; Tech Intern</div>
+          <div class="role-org">Department of Trade &amp; Industry (DTI XII)</div>
+          <p class="role-summary">Coordinated digital administration systems (90% agency participation), improved event efficiency by 30%, and resolved live hardware/AV faults.</p>
+        </div>
+      </div>
+
+      <!-- Compact Tabbed L2 Responsibilities Console (Categories A-E) -->
+      <div class="ops-console glass reveal" id="opsConsole">
+        <div class="ops-console-bar">
+          <div class="ops-tabs" role="tablist">
+            <button class="ops-tab active" data-ops="ops-a" role="tab">A. BAU Operations</button>
+            <button class="ops-tab" data-ops="ops-b" role="tab">B. Infrastructure Monitoring</button>
+            <button class="ops-tab" data-ops="ops-c" role="tab">C. Log Analysis</button>
+            <button class="ops-tab" data-ops="ops-d" role="tab">D. Incident Management</button>
+            <button class="ops-tab" data-ops="ops-e" role="tab">E. Deployment &amp; Maintenance</button>
+          </div>
+          <button class="ops-view-all-btn" id="opsExpandBtn">Expand All A&ndash;E</button>
+        </div>
+
+        <div class="ops-console-body" id="opsBody">
+          <div class="ops-pane active" id="ops-a">
+            <div class="ops-pane-title">
+              <h3>A. Business-as-Usual Operations &mdash; LotusFlare (DNO&trade; Cloud)</h3>
+              <span class="mono badge-cyan" style="font-size: 0.7rem;">SLA EXECUTION</span>
+            </div>
+            <ul class="ops-list-grid">
+              <li>Jira ticket lifecycle management within SLA targets.</li>
+              <li>Operational request handling (refunds, terminations, user access).</li>
+              <li>Investigation of failed asynchronous workflows.</li>
+              <li>Authorized workflow execution recovery via Postman/APIs.</li>
+              <li>Maintenance coordination and post-maintenance validation.</li>
+            </ul>
+          </div>
+
+          <div class="ops-pane" id="ops-b">
+            <div class="ops-pane-title">
+              <h3>B. Infrastructure Monitoring &mdash; LotusFlare (DNO&trade; Cloud)</h3>
+              <span class="mono badge-cyan" style="font-size: 0.7rem;">GRAFANA &middot; VICTORIAMEETRICS</span>
+            </div>
+            <ul class="ops-list-grid">
+              <li>Grafana dashboard monitoring across telecom &amp; SaaS services.</li>
+              <li>VictoriaMetrics and PromQL metric analysis.</li>
+              <li>HTTP 5xx error spike monitoring and router IP health checks.</li>
+              <li>CPU and memory utilization monitoring.</li>
+              <li>Kafka lag and message queue monitoring.</li>
+              <li>Production alert triage and initial health assessment.</li>
+            </ul>
+          </div>
+
+          <div class="ops-pane" id="ops-c">
+            <div class="ops-pane-title">
+              <h3>C. Log Analysis &mdash; LotusFlare (DNO&trade; Cloud)</h3>
+              <span class="mono badge-cyan" style="font-size: 0.7rem;">VICTORIALOGS &middot; OPENSEARCH</span>
+            </div>
+            <ul class="ops-list-grid">
+              <li>VictoriaLogs and LogsQL searches alongside OpenSearch queries.</li>
+              <li>Request ID and trace ID investigation across services.</li>
+              <li>Distributed transaction tracing across gateway &amp; microservices.</li>
+              <li>API error investigation (4xx/5xx payloads and timeouts).</li>
+              <li>External dependency failure identification (e.g., SMDP+ gateways).</li>
+              <li>Internal application validation error investigation.</li>
+            </ul>
+          </div>
+
+          <div class="ops-pane" id="ops-d">
+            <div class="ops-pane-title">
+              <h3>D. Production Incident Management &mdash; LotusFlare (DNO&trade; Cloud)</h3>
+              <span class="mono badge-cyan" style="font-size: 0.7rem;">L1 / L3 COORDINATION</span>
+            </div>
+            <ul class="ops-list-grid">
+              <li>Incident severity assessment and impact scoping.</li>
+              <li>Collection of anonymized logs and monitoring evidence.</li>
+              <li>Customer impact investigation across regions and subscriber tiers.</li>
+              <li>Coordination with L1 support and L3 engineering teams.</li>
+              <li>Structured technical escalation with reproduction steps.</li>
+              <li>Service recovery verification and incident documentation.</li>
+            </ul>
+          </div>
+
+          <div class="ops-pane" id="ops-e">
+            <div class="ops-pane-title">
+              <h3>E. Deployment &amp; Maintenance Support &mdash; LotusFlare (DNO&trade; Cloud)</h3>
+              <span class="mono badge-cyan" style="font-size: 0.7rem;">ARGOCD &middot; SMOKE TESTS</span>
+            </div>
+            <ul class="ops-list-grid">
+              <li>Scheduled maintenance window coordination with engineering teams.</li>
+              <li>Traffic draining and service restoration coordination.</li>
+              <li>ArgoCD configuration state verification during release windows.</li>
+              <li>Post-deployment smoke testing and telemetry sign-off.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. TECHNICAL SKILLS (PAIRED DIRECTLY WITH EXPERIENCE — CLEAN 3x2 GRID) -->
+  <section id="skills" class="sec">
+    <div class="container">
+      <div class="sec-head reveal">
+        <div>
+          <span class="sec-kicker">02 // Technical Stack &amp; Proficiency</span>
+          <h2>Technical Skills</h2>
+          <p class="sec-desc">Organized across observability, diagnostics, networking, and automation—explicitly distinguishing hands-on production experience from foundational knowledge.</p>
+        </div>
+        <div class="legend-bar">
+          <span class="lvl-hands">Hands-On Experience</span>
+          <span class="lvl-found">Foundational / Working</span>
+        </div>
+      </div>
+
+      <div class="skills-grid stagger-group">
+        <div class="skill-card glass hover-card reveal">
+          <div class="skill-head">
+            <div class="skill-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <h3>Monitoring &amp; Observability</h3>
+          </div>
+          <div class="skill-items">
+            <div class="skill-row"><span>Grafana</span><span class="lvl-hands">Hands-On</span></div>
+            <div class="skill-row"><span>VictoriaMetrics / Prometheus</span><span class="lvl-hands">Hands-On</span></div>
+            <div class="skill-row"><span>PromQL</span><span class="lvl-hands">Working / Hands-On</span></div>
+          </div>
+        </div>
+
+        <div class="skill-card glass hover-card reveal">
+          <div class="skill-head">
+            <div class="skill-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            </div>
+            <h3>Log Analysis</h3>
+          </div>
+          <div class="skill-items">
+            <div class="skill-row"><span>VictoriaLogs &amp; LogsQL</span><span class="lvl-hands">Hands-On</span></div>
+            <div class="skill-row"><span>OpenSearch</span><span class="lvl-hands">Hands-On</span></div>
+            <div class="skill-row"><span>Distributed Trace Correlation</span><span class="lvl-hands">Hands-On</span></div>
+          </div>
+        </div>
+
+        <div class="skill-card glass hover-card reveal">
+          <div class="skill-head">
+            <div class="skill-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            </div>
+            <h3>Incident Management</h3>
+          </div>
+          <div class="skill-items">
+            <div class="skill-row"><span>Jira Service Management</span><span class="lvl-hands">Hands-On</span></div>
+            <div class="skill-row"><span>Slack / Google Chat</span><span class="lvl-hands">Hands-On</span></div>
+            <div class="skill-row"><span>OpsGenie</span><span class="lvl-found">Working / Foundational</span></div>
+          </div>
+        </div>
+
+        <div class="skill-card glass hover-card reveal">
+          <div class="skill-head">
+            <div class="skill-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </div>
+            <h3>API Troubleshooting</h3>
+          </div>
+          <div class="skill-items">
+            <div class="skill-row"><span>Postman</span><span class="lvl-hands">Hands-On</span></div>
+            <div class="skill-row"><span>REST APIs &amp; JWT Auth</span><span class="lvl-hands">Hands-On</span></div>
+            <div class="skill-row"><span>HTTP Status &amp; Payload Debugging</span><span class="lvl-hands">Hands-On</span></div>
+          </div>
+        </div>
+
+        <div class="skill-card glass hover-card reveal">
+          <div class="skill-head">
+            <div class="skill-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/></svg>
+            </div>
+            <h3>Infrastructure Operations</h3>
+          </div>
+          <div class="skill-items">
+            <div class="skill-row"><span>Kubernetes</span><span class="lvl-found">Foundational</span></div>
+            <div class="skill-row"><span>ArgoCD (Config Verification)</span><span class="lvl-found">Foundational</span></div>
+            <div class="skill-row"><span>Linux Fundamentals &amp; Windows</span><span class="lvl-hands">Hands-On</span></div>
+          </div>
+        </div>
+
+        <div class="skill-card glass hover-card reveal">
+          <div class="skill-head">
+            <div class="skill-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </div>
+            <h3>Networking &amp; Automation</h3>
+          </div>
+          <div class="skill-items">
+            <div class="skill-row"><span>TCP/IP, DNS, DHCP, VPN</span><span class="lvl-hands">Hands-On</span></div>
+            <div class="skill-row"><span>Python (Internal GUI/API Tools)</span><span class="lvl-hands">Hands-On</span></div>
+            <div class="skill-row"><span>HTML, CSS, JavaScript, SQL</span><span class="lvl-found">Foundational / Working</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. PROJECTS & INTERACTIVE OBSERVABILITY LAB (UNIFIED PROOF OF WORK) -->
+  <section id="projects" class="sec">
+    <div class="container">
+      <div class="sec-head reveal">
+        <div>
+          <span class="sec-kicker">03 // Proof of Work &amp; Interactive Demos</span>
+          <h2>Projects &amp; Observability Lab</h2>
+          <p class="sec-desc">Internal support automation utilities I built, paired directly with an interactive Grafana, VictoriaLogs, and OpenSearch troubleshooting sandbox.</p>
+        </div>
+      </div>
+
+      <!-- 2-Column Built Support Tools (No Placeholders, No Duplicate Lab Card) -->
+      <div class="projects-grid stagger-group">
+        <div class="proj-card glass hover-card reveal" data-proj="gfiber" role="button" tabindex="0">
+          <div class="proj-head">
+            <span class="proj-status sev-INFO">BUILT INTERNAL UTILITY</span>
+            <div class="proj-icon">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </div>
+          </div>
+          <h3>GFiber Promo Extension Automation Tool</h3>
+          <p style="font-size: 0.85rem; color: var(--muted);">Python desktop GUI (`ttkbootstrap`/Tkinter) using HS256 JWT signing, dynamic offer ID calculation (50&ndash;500 Mbps), and multithreaded API execution.</p>
+          <div class="tool-tags">
+            <span class="tool-tag">Python</span>
+            <span class="tool-tag">HS256 JWT</span>
+            <span class="tool-tag">REST API</span>
+          </div>
+          <div class="case-cta"><span>Launch GUI Simulator</span><span>&rarr;</span></div>
+        </div>
+
+        <div class="proj-card glass hover-card reveal" data-proj="finops" role="button" tabindex="0">
+          <div class="proj-head">
+            <span class="proj-status sev-INFO">API DEMONSTRATION</span>
+            <div class="proj-icon">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </div>
+          </div>
+          <h3>API Troubleshooting &amp; FinOps Validator</h3>
+          <p style="font-size: 0.85rem; color: var(--muted);">Postman diagnostic suite and batch refund validation workflow demonstrating idempotent REST calls, payload inspection, and discrepancy checks.</p>
+          <div class="tool-tags">
+            <span class="tool-tag">Postman</span>
+            <span class="tool-tag">REST</span>
+            <span class="tool-tag">FinOps</span>
+          </div>
+          <div class="case-cta"><span>Open Validator Preview</span><span>&rarr;</span></div>
+        </div>
+      </div>
+
+      <!-- Integrated Interactive Observability Lab -->
+      <div id="observability-lab" class="reveal-scale">
+        <div class="lab-subhead">
+          <div>
+            <div class="mono badge-cyan" style="font-size: 0.72rem;">INTERACTIVE OBSERVABILITY LAB</div>
+            <div style="font-size: 0.88rem; color: var(--muted); margin-top: 0.2rem;">Switch between Grafana, VictoriaLogs, and OpenSearch simulations below.</div>
+          </div>
+          <div class="demo-banner">
+            <span class="pulse-dot"></span>
+            Simulated Frontend Demonstration &mdash; Not Connected to Live Production
+          </div>
+        </div>
+
+        <div class="lab-shell glass">
+          <div class="lab-nav">
+            <div class="lab-tabs" role="tablist">
+              <button class="lab-tab active" data-lab="lab-grafana" role="tab">A. Grafana Dashboard</button>
+              <button class="lab-tab" data-lab="lab-vlogs" role="tab">B. VictoriaLogs Explorer</button>
+              <button class="lab-tab" data-lab="lab-opensearch" role="tab">C. OpenSearch Analytics</button>
+            </div>
+            <span class="mono" style="font-size: 0.7rem; color: var(--muted);">env: telecom-saas-demo // tz: UTC+08 / PST</span>
+          </div>
+
+          <!-- A. GRAFANA -->
+          <div class="lab-panel active" id="lab-grafana">
+            <div class="graf-controls">
+              <div class="ctrl-group">
+                <span style="color: var(--muted);">Cluster:</span>
+                <span class="badge-cyan">dno-prod-sim</span>
+                <span style="color: var(--muted); margin-left: 0.5rem;">Service:</span>
+                <select class="ctrl-select" id="grafSvcSelect" aria-label="Filter Grafana Service">
+                  <option value="all">All Services (4)</option>
+                  <option value="ocf">ocf-diameter-gw</option>
+                  <option value="esim">esim-orchestrator</option>
+                  <option value="billing">billing-worker</option>
+                </select>
+              </div>
+              <div class="ctrl-group">
+                <span style="color: var(--muted);">Range:</span>
+                <div class="time-btns" id="grafTimeBtns">
+                  <button class="t-btn" data-t="15m">15m</button>
+                  <button class="t-btn active" data-t="1h">1h</button>
+                  <button class="t-btn" data-t="6h">6h</button>
+                  <button class="t-btn" data-t="24h">24h</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="graf-stat-strip">
+              <div class="stat-tile">
+                <div class="stat-tile-lbl">Service Availability</div>
+                <div class="stat-tile-val badge-ok" id="gAvail">99.94%</div>
+              </div>
+              <div class="stat-tile">
+                <div class="stat-tile-lbl">HTTP 2xx Rate</div>
+                <div class="stat-tile-val badge-cyan" id="g2xx">99.41%</div>
+              </div>
+              <div class="stat-tile">
+                <div class="stat-tile-lbl">HTTP 4xx Rate</div>
+                <div class="stat-tile-val badge-warn" id="g4xx">0.47%</div>
+              </div>
+              <div class="stat-tile">
+                <div class="stat-tile-lbl">HTTP 5xx Rate</div>
+                <div class="stat-tile-val badge-err" id="g5xx">0.12%</div>
+              </div>
+              <div class="stat-tile">
+                <div class="stat-tile-lbl">API p95 Latency</div>
+                <div class="stat-tile-val" id="gLat">142ms</div>
+              </div>
+              <div class="stat-tile">
+                <div class="stat-tile-lbl">Throughput</div>
+                <div class="stat-tile-val badge-cyan" id="gRps">1,840 req/s</div>
+              </div>
+            </div>
+
+            <div class="graf-charts-grid">
+              <div class="panel-box">
+                <div class="panel-title">
+                  <span>HTTP Responses (2xx / 4xx / 5xx) &amp; Throughput</span>
+                  <span class="mono" style="color: var(--cyan);">PromQL: rate(http_requests_total[5m])</span>
+                </div>
+                <svg viewBox="0 0 440 125" width="100%" height="125" aria-label="HTTP Responses Time Series">
+                  <line x1="0" y1="25" x2="440" y2="25" stroke="rgba(145,164,186,0.14)" stroke-dasharray="3 3" />
+                  <line x1="0" y1="60" x2="440" y2="60" stroke="rgba(145,164,186,0.14)" stroke-dasharray="3 3" />
+                  <line x1="0" y1="95" x2="440" y2="95" stroke="rgba(145,164,186,0.14)" stroke-dasharray="3 3" />
+                  <path id="gHttp2xx" d="M0,34 L55,30 L110,33 L165,24 L220,29 L275,22 L330,27 L385,20 L440,23" fill="none" stroke="#20C5D9" stroke-width="2" />
+                  <path id="gHttp4xx" d="M0,88 L55,86 L110,89 L165,83 L220,85 L275,84 L330,87 L385,82 L440,84" fill="none" stroke="#F59E0B" stroke-width="1.5" />
+                  <path id="gHttp5xx" d="M0,108 L55,109 L110,107 L165,78 L220,104 L275,108 L330,107 L385,109 L440,108" fill="none" stroke="#EF4444" stroke-width="1.8" />
+                </svg>
+                <div class="chart-legend">
+                  <span><span style="color: var(--cyan);">&mdash;</span> 2xx OK</span>
+                  <span><span style="color: var(--warn);">&mdash;</span> 4xx Client</span>
+                  <span><span style="color: var(--err);">&mdash;</span> 5xx Spike (SMDP Timeout)</span>
+                </div>
+              </div>
+
+              <div class="panel-box">
+                <div class="panel-title">
+                  <span>API Latency (p50 / p95 / p99) &amp; Node CPU/Mem</span>
+                  <span class="mono" style="color: var(--blue);">ms / % util</span>
+                </div>
+                <svg viewBox="0 0 440 125" width="100%" height="125" aria-label="API Latency and Resource Chart">
+                  <line x1="0" y1="25" x2="440" y2="25" stroke="rgba(145,164,186,0.14)" stroke-dasharray="3 3" />
+                  <line x1="0" y1="60" x2="440" y2="60" stroke="rgba(145,164,186,0.14)" stroke-dasharray="3 3" />
+                  <line x1="0" y1="95" x2="440" y2="95" stroke="rgba(145,164,186,0.14)" stroke-dasharray="3 3" />
+                  <path id="gLatP99" d="M0,48 L55,44 L110,46 L165,18 L220,42 L275,45 L330,41 L385,43 L440,40" fill="none" stroke="#2583E8" stroke-width="2" />
+                  <path id="gLatP95" d="M0,68 L55,65 L110,66 L165,52 L220,63 L275,66 L330,62 L385,64 L440,61" fill="none" stroke="#20C5D9" stroke-width="1.6" />
+                  <path id="gCpuLine" d="M0,85 L55,82 L110,84 L165,74 L220,80 L275,83 L330,81 L385,82 L440,80" fill="none" stroke="#10B981" stroke-width="1.4" stroke-dasharray="4 3" />
+                </svg>
+                <div class="chart-legend">
+                  <span><span style="color: var(--blue);">&mdash;</span> p99 Latency</span>
+                  <span><span style="color: var(--cyan);">&mdash;</span> p95 Latency</span>
+                  <span><span style="color: var(--ok);">--</span> CPU Util (<span id="gCpuText">41.2%</span>) &middot; Mem (<span id="gMemText">64.8%</span>)</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="svc-table-wrap">
+              <table class="obs-table">
+                <thead>
+                  <tr>
+                    <th>Service / Component</th>
+                    <th>Health</th>
+                    <th>Availability</th>
+                    <th>CPU / Mem</th>
+                    <th>Throughput / Lag</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>ocf_gy &amp; ocf_sy (Diameter GW)</td>
+                    <td><span class="sev-tag sev-INFO">HEALTHY</span></td>
+                    <td>99.9% / 100.0%</td>
+                    <td>38% / 61%</td>
+                    <td>1,210 req/s &middot; CCR/CCA SYNC</td>
+                  </tr>
+                  <tr>
+                    <td>esim-orchestrator</td>
+                    <td><span class="sev-tag sev-WARN">UPSTREAM WARN</span></td>
+                    <td>99.72%</td>
+                    <td>44% / 68%</td>
+                    <td>310 req/s &middot; SMDP ext timeout spike</td>
+                  </tr>
+                  <tr>
+                    <td>billing-worker (Kafka Consumer)</td>
+                    <td><span class="sev-tag sev-INFO">HEALTHY</span></td>
+                    <td>99.98%</td>
+                    <td>35% / 59%</td>
+                    <td>320 msg/s &middot; Consumer Lag: 12</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- B. VICTORIALOGS -->
+          <div class="lab-panel" id="lab-vlogs">
+            <div class="vlogs-query-bar">
+              <input type="text" class="query-input" id="vlogsQuery" value="_time:1h" placeholder="LogsQL filter (e.g. ERROR, 504, trc-8810e2d1, esim-orchestrator)" aria-label="LogsQL Query Input" />
+              <select class="ctrl-select" id="vlogsSev" aria-label="Filter Severity">
+                <option value="ALL">Severity: ALL</option>
+                <option value="ERROR">ERROR</option>
+                <option value="WARN">WARN</option>
+                <option value="INFO">INFO</option>
+              </select>
+              <select class="ctrl-select" id="vlogsSvc" aria-label="Filter Service">
+                <option value="ALL">Service: ALL</option>
+                <option value="esim-orchestrator">esim-orchestrator</option>
+                <option value="api-gateway">api-gateway</option>
+                <option value="billing-worker">billing-worker</option>
+                <option value="ocf-diameter-gw">ocf-diameter-gw</option>
+              </select>
+              <button class="btn btn-primary" id="vlogsRunBtn" style="padding: 0.45rem 0.9rem; font-size: 0.78rem;">Run LogsQL</button>
+            </div>
+
+            <div class="quick-chips">
+              <button class="q-chip" data-q="_time:1h">_time:1h (All)</button>
+              <button class="q-chip" data-q="504">status:504</button>
+              <button class="q-chip" data-q="timeout">err_msg:timeout</button>
+              <button class="q-chip" data-q="trc-8810e2d1">trace_id:trc-8810e2d1</button>
+              <button class="q-chip" data-q="ERR_INVALID_OFFER_STATE">ERR_INVALID_OFFER_STATE</button>
+            </div>
+
+            <div class="svc-table-wrap">
+              <table class="obs-table">
+                <thead>
+                  <tr>
+                    <th>Timestamp (UTC)</th>
+                    <th>Severity</th>
+                    <th>Service</th>
+                    <th>Request ID</th>
+                    <th>Trace ID</th>
+                    <th>Message (Click row to expand)</th>
+                  </tr>
+                </thead>
+                <tbody id="vlogsTbody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- C. OPENSEARCH -->
+          <div class="lab-panel" id="lab-opensearch">
+            <div class="vlogs-query-bar">
+              <input type="text" class="query-input" id="osQuery" value="status:>=400 OR service:*" placeholder="OpenSearch KQL query..." aria-label="OpenSearch Query Input" />
+              <select class="ctrl-select" id="osTimeFilter" aria-label="Filter Time Window">
+                <option value="ALL">Time: Last 1h (All buckets)</option>
+                <option value="09:40">Bucket: 09:40 - 09:45 (Spike)</option>
+                <option value="09:45">Bucket: 09:45 - 09:50</option>
+              </select>
+              <button class="btn btn-primary" id="osSearchBtn" style="padding: 0.45rem 0.9rem; font-size: 0.78rem;">Search Index</button>
+            </div>
+
+            <div class="os-layout">
+              <div class="os-sidebar">
+                <div>
+                  <div class="os-facet-title">Severity Filter</div>
+                  <div id="osSevFacets">
+                    <button class="facet-btn active" data-os-sev="ALL"><span>All Levels</span><span>6</span></button>
+                    <button class="facet-btn" data-os-sev="ERROR"><span>ERROR</span><span>2</span></button>
+                    <button class="facet-btn" data-os-sev="WARN"><span>WARN</span><span>2</span></button>
+                    <button class="facet-btn" data-os-sev="INFO"><span>INFO</span><span>2</span></button>
+                  </div>
+                </div>
+                <div>
+                  <div class="os-facet-title">Service Filter</div>
+                  <div id="osSvcFacets">
+                    <button class="facet-btn active" data-os-svc="ALL"><span>All Services</span><span>6</span></button>
+                    <button class="facet-btn" data-os-svc="esim-orchestrator"><span>esim-orchestrator</span><span>2</span></button>
+                    <button class="facet-btn" data-os-svc="api-gateway"><span>api-gateway</span><span>2</span></button>
+                    <button class="facet-btn" data-os-svc="billing-worker"><span>billing-worker</span><span>1</span></button>
+                    <button class="facet-btn" data-os-svc="ocf-diameter-gw"><span>ocf-diameter-gw</span><span>1</span></button>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="os-histogram">
+                  <div class="panel-title">
+                    <span>Log Volume Histogram (Hits per 5m Bucket)</span>
+                    <span class="badge-cyan" id="osHitCount">6 hits</span>
+                  </div>
+                  <svg viewBox="0 0 420 65" width="100%" height="65" aria-label="OpenSearch Log Volume Histogram">
+                    <rect x="10" y="34" width="44" height="22" fill="#2583E8" opacity="0.7" />
+                    <rect x="70" y="28" width="44" height="28" fill="#2583E8" opacity="0.75" />
+                    <rect x="130" y="6" width="44" height="50" fill="#EF4444" opacity="0.85" />
+                    <rect x="190" y="20" width="44" height="36" fill="#20C5D9" opacity="0.8" />
+                    <rect x="250" y="32" width="44" height="24" fill="#2583E8" opacity="0.7" />
+                    <rect x="310" y="36" width="44" height="20" fill="#2583E8" opacity="0.7" />
+                    <rect x="370" y="30" width="44" height="26" fill="#20C5D9" opacity="0.75" />
+                    <text x="128" y="64" fill="#91A4BA" font-family="JetBrains Mono" font-size="8">09:40 (Spike)</text>
+                  </svg>
+                </div>
+
+                <div class="svc-table-wrap">
+                  <table class="obs-table">
+                    <thead>
+                      <tr>
+                        <th>@timestamp</th>
+                        <th>level</th>
+                        <th>service</th>
+                        <th>message</th>
+                      </tr>
+                    </thead>
+                    <tbody id="osTbody"></tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="os-json-panel">
+                <div class="panel-title">
+                  <span>JSON Document Inspector</span>
+                  <span class="badge-cyan">PII MASKED</span>
+                </div>
+                <pre class="os-json-pre" id="osJsonView"></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. TECHNICAL CASE STUDIES (2-COL GRID WITH FEATURED SPAN-2 = ZERO ORPHAN) -->
+  <section id="case-studies" class="sec">
+    <div class="container">
+      <div class="sec-head reveal">
+        <div>
+          <span class="sec-kicker">04 // Illustrative Diagnostic Walkthroughs</span>
+          <h2>Technical Case Studies</h2>
+          <p class="sec-desc">Simulated and anonymized demonstrations illustrating my end-to-end investigation workflow from alert triage to escalation and lessons learned.</p>
+        </div>
+        <div class="demo-banner">Simulated &amp; Anonymized Demonstrations</div>
+      </div>
+
+      <div class="cases-grid stagger-group">
+        <!-- Featured Wide Card (Spans 2 columns so remaining 4 form a symmetrical 2x2 grid) -->
+        <article class="case-card case-featured glass hover-card reveal" data-case="cs1" role="button" tabindex="0">
+          <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+            <div class="case-num-row">
+              <span class="badge-cyan">CASE STUDY 01 &middot; FEATURED</span>
+              <span style="color: var(--muted);">ILLUSTRATIVE DEMO</span>
+            </div>
+            <h3>Production Service Degradation Investigation</h3>
+            <p>Investigating an HTTP 5xx spike, verifying OCF/service health metrics, correlating transaction IDs in logs, and escalating findings cleanly to L3 engineering.</p>
+            <div class="tool-tags">
+              <span class="tool-tag">Grafana</span>
+              <span class="tool-tag">VictoriaMetrics</span>
+              <span class="tool-tag">VictoriaLogs</span>
+            </div>
+            <div class="case-cta"><span>Inspect Full Investigation</span><span>&rarr;</span></div>
+          </div>
+          <div class="case-featured-snippet" aria-hidden="true">
+            <div style="color: var(--cyan); margin-bottom: 0.35rem;">CORRELATED DIAGNOSTIC SUMMARY</div>
+            <div>&bull; HTTP 5xx Spike: 0.12% &rarr; 3.40% (5m window)</div>
+            <div>&bull; Diameter ocf_gy: 99.9% | ocf_sy: 100.0% (Healthy)</div>
+            <div>&bull; Kafka Consumer Lag: 12 msgs (Nominal)</div>
+            <div>&bull; Fault Isolated: External SMDP+ 30,000ms timeout</div>
+          </div>
+        </article>
+
+        <article class="case-card glass hover-card reveal" data-case="cs2" role="button" tabindex="0">
+          <div class="case-num-row">
+            <span class="badge-cyan">CASE STUDY 02</span>
+            <span style="color: var(--muted);">ILLUSTRATIVE DEMO</span>
+          </div>
+          <h3>Distributed Log Analysis</h3>
+          <p>Tracing external SMDP+ 504 timeouts (`prepareReleaseICCID`) vs. internal validation errors using LogsQL, trace IDs, and PII-redacted logs.</p>
+          <div class="tool-tags">
+            <span class="tool-tag">VictoriaLogs</span>
+            <span class="tool-tag">LogsQL</span>
+            <span class="tool-tag">OpenSearch</span>
+          </div>
+          <div class="case-cta"><span>Inspect Full Investigation</span><span>&rarr;</span></div>
+        </article>
+
+        <article class="case-card glass hover-card reveal" data-case="cs3" role="button" tabindex="0">
+          <div class="case-num-row">
+            <span class="badge-cyan">CASE STUDY 03</span>
+            <span style="color: var(--muted);">ILLUSTRATIVE DEMO</span>
+          </div>
+          <h3>API Troubleshooting</h3>
+          <p>Inspecting REST API payloads, resolving HTTP 401/422 JWT &amp; offer-state mismatches, analyzing timeouts, and assembling evidence.</p>
+          <div class="tool-tags">
+            <span class="tool-tag">Postman</span>
+            <span class="tool-tag">REST APIs</span>
+            <span class="tool-tag">HTTP</span>
+          </div>
+          <div class="case-cta"><span>Inspect Full Investigation</span><span>&rarr;</span></div>
+        </article>
+
+        <article class="case-card glass hover-card reveal" data-case="cs4" role="button" tabindex="0">
+          <div class="case-num-row">
+            <span class="badge-cyan">CASE STUDY 04</span>
+            <span style="color: var(--muted);">ILLUSTRATIVE DEMO</span>
+          </div>
+          <h3>Production Workflow Recovery</h3>
+          <p>Diagnosing stalled asynchronous subscriber provisioning workflows, coordinating authorized recovery actions, and validating completion.</p>
+          <div class="tool-tags">
+            <span class="tool-tag">Jira</span>
+            <span class="tool-tag">Workflow Orchestration</span>
+          </div>
+          <div class="case-cta"><span>Inspect Full Investigation</span><span>&rarr;</span></div>
+        </article>
+
+        <article class="case-card glass hover-card reveal" data-case="cs5" role="button" tabindex="0">
+          <div class="case-num-row">
+            <span class="badge-cyan">CASE STUDY 05</span>
+            <span style="color: var(--muted);">ILLUSTRATIVE DEMO</span>
+          </div>
+          <h3>Incident Management</h3>
+          <p>End-to-end P1/P2 incident triage, severity classification, L1/L3 escalation coordination, recovery validation, and runbook documentation.</p>
+          <div class="tool-tags">
+            <span class="tool-tag">Jira</span>
+            <span class="tool-tag">Grafana</span>
+            <span class="tool-tag">Slack</span>
+            <span class="tool-tag">OpsGenie</span>
+          </div>
+          <div class="case-cta"><span>Inspect Full Investigation</span><span>&rarr;</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. TECHNICAL WORKFLOW ARCHITECTURE DIAGRAM (MOVED DOWN AS SUPPORTING CONTEXT) -->
+  <section id="workflow" class="sec">
+    <div class="container">
+      <div class="sec-head reveal">
+        <div>
+          <span class="sec-kicker">05 // Operational Architecture</span>
+          <h2>Escalation &amp; Triage Workflow</h2>
+          <p class="sec-desc">How L2 Technical Operations connects frontline customer support with L3 software and infrastructure engineering. Select any stage to inspect handoff artifacts.</p>
+        </div>
+      </div>
+
+      <div class="workflow-diagram reveal" id="wfDiagram">
+        <button class="wf-node glass" data-step="0">
+          <span class="wf-step-num">STAGE 01</span>
+          <span class="wf-step-title">L1 Frontline Support</span>
+          <span class="wf-step-sub">Initial intake, CRM verification &amp; basic triage</span>
+        </button>
+        <div class="wf-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <button class="wf-node glass active" data-step="1">
+          <span class="wf-step-num">STAGE 02</span>
+          <span class="wf-step-title">L2 Technical Operations</span>
+          <span class="wf-step-sub">SLA triage, severity check &amp; reproduction</span>
+        </button>
+        <div class="wf-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <button class="wf-node glass" data-step="2">
+          <span class="wf-step-num">STAGE 03</span>
+          <span class="wf-step-title">Monitoring &amp; Log Investigation</span>
+          <span class="wf-step-sub">Grafana, VictoriaLogs, OpenSearch &amp; Postman</span>
+        </button>
+        <div class="wf-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <button class="wf-node glass" data-step="3">
+          <span class="wf-step-num">STAGE 04</span>
+          <span class="wf-step-title">L3 Engineering Escalation</span>
+          <span class="wf-step-sub">Actionable Jira defect + trace IDs + RCA</span>
+        </button>
+        <div class="wf-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <button class="wf-node glass" data-step="4">
+          <span class="wf-step-num">STAGE 05</span>
+          <span class="wf-step-title">Service Recovery &amp; Validation</span>
+          <span class="wf-step-sub">Smoke tests, ArgoCD checks &amp; KB updates</span>
+        </button>
+      </div>
+
+      <div class="wf-detail-bar glass reveal" id="wfDetailBar">
+        <div>
+          <div class="mono badge-cyan" style="font-size: 0.72rem; margin-bottom: 0.25rem;" id="wfDetailTitle">STAGE 02 &mdash; L2 TECHNICAL OPERATIONS (CORE ROLE)</div>
+          <div style="font-size: 0.88rem; color: var(--muted);" id="wfDetailDesc">Validates customer impact, isolates operational requests (refunds, terminations, permissions) vs. platform defects, and initiates structured investigation.</div>
+        </div>
+        <div class="mono" style="font-size: 0.74rem; color: var(--text);" id="wfDetailTools">Tools: Jira &middot; Slack / Google Chat &middot; OpsGenie &middot; CRM</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. ABOUT ME & EDUCATION (MOVED DOWN BELOW WORKFLOW) -->
+  <section id="about" class="sec">
+    <div class="container">
+      <div class="sec-head reveal">
+        <div>
+          <span class="sec-kicker">06 // Background &amp; Credentials</span>
+          <h2>About Me &amp; Education</h2>
+        </div>
+      </div>
+
+      <div class="about-grid">
+        <div class="card glass hover-card about-text reveal">
+          <p>
+            I am an <strong>L2 Technical Support and Production Operations Specialist</strong> with hands-on experience supporting high-volume telecommunications and distributed cloud SaaS platforms (including Globe Telecom's GFiber and GOMO ecosystems on LotusFlare DNO&trade; Cloud).
+          </p>
+          <p>
+            My day-to-day work sits directly between frontline customer operations and core software engineering: verifying production service health, reading Nginx/Lua and microservice logs, tracing distributed transaction IDs, reproducing API failures in Postman, and packaging actionable technical evidence for L3 teams.
+          </p>
+          <p>
+            Building on a strong analytical foundation in Economics (<strong>Cum Laude</strong>), ongoing legal studies, and Cisco networking coursework, I am actively advancing toward <strong>Network Engineering, Infrastructure Engineering, and DevOps</strong>—with a strong interest in building internal support tooling and monitoring workflows.
+          </p>
+
+          <ul class="focus-list">
+            <li>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              L2 Technical Support
+            </li>
+            <li>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              Production Application Support
+            </li>
+            <li>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              Infrastructure Monitoring
+            </li>
+            <li>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              Log Analysis &amp; Tracing
+            </li>
+            <li>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              API &amp; Connectivity Diagnostics
+            </li>
+            <li>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              Incident &amp; L3 Escalation Mgmt
+            </li>
+          </ul>
+        </div>
+
+        <div class="creds-side stagger-group">
+          <div class="cred-mini glass hover-card reveal">
+            <div class="cred-mini-kicker">Education</div>
+            <div class="cred-mini-title">B.S. in Economics (Cum Laude)</div>
+            <div class="cred-mini-sub">Mindanao State University - General Santos</div>
+          </div>
+          <div class="cred-mini glass hover-card reveal">
+            <div class="cred-mini-kicker">Continuing Education</div>
+            <div class="cred-mini-title">Doctor of Law (In Progress)</div>
+            <div class="cred-mini-sub">Structured reasoning, compliance &amp; incident documentation</div>
+          </div>
+          <div class="cred-mini glass hover-card reveal">
+            <div class="cred-mini-kicker">Certifications (Cisco &amp; Coursera)</div>
+            <div class="cred-mini-title">CCNA: Intro to Networks &amp; Networking Basics</div>
+            <div class="cred-mini-sub">SQL &amp; Relational Databases &middot; Google Data Analytics &middot; Power BI &middot; Bits &amp; Bytes of Computer Networking</div>
+          </div>
+          <div class="cred-mini glass hover-card reveal">
+            <div class="cred-mini-kicker">Career Trajectory</div>
+            <div class="cred-mini-title">Network Engineering &middot; Infrastructure &middot; DevOps</div>
+            <div class="cred-mini-sub">Transitioning deep production triage into resilient systems engineering</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. CONTACT SECTION (ZERO PLACEHOLDERS) -->
+  <section id="contact" class="sec" style="border-bottom: none;">
+    <div class="container">
+      <div class="sec-head reveal">
+        <div>
+          <span class="sec-kicker">07 // Contact &amp; Remote Readiness</span>
+          <h2>Get in Touch</h2>
+          <p class="sec-desc">Open to remote L2 Technical Support, Production Operations, and SaaS/Infrastructure Support roles.</p>
+        </div>
+      </div>
+
+      <div class="contact-grid">
+        <div class="card glass hover-card reveal">
+          <h3 style="font-size: 1.1rem; margin-bottom: 0.35rem;">Direct Channels</h3>
+          <p style="font-size: 0.88rem; color: var(--muted);">General Santos City, Philippines &middot; Available for US / APAC / EMEA overlap.</p>
+          <div class="contact-links">
+            <button class="c-link" id="copyEmailBtn" data-email="melvinexiomo@gmail.com">
+              <span id="emailLabel">melvinexiomo@gmail.com</span>
+              <span class="badge-cyan">Copy</span>
+            </button>
+            <a href="https://www.linkedin.com/in/melvin-exiomo-7935a420b" target="_blank" rel="noopener" class="c-link">
+              <span>LinkedIn Profile</span>
+              <span class="badge-cyan">&nearr;</span>
+            </a>
+            <a href="tel:+639707016936" class="c-link">
+              <span>+63 970 701 6936</span>
+              <span class="badge-cyan">Call</span>
+            </a>
+            <button class="c-link" id="footerResumeBtn">
+              <span>Download / Print Resume</span>
+              <span class="badge-ok">PDF</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="remote-card glass hover-card reveal">
+          <div class="status-strip" style="margin-bottom: 0.5rem;">
+            <span class="pulse-dot"></span>
+            <span>REMOTE WORKSPACE READY</span>
+          </div>
+          <ul class="remote-list">
+            <li>+ Primary Fiber Internet + Redundant Backup</li>
+            <li>+ Dedicated UPS Power Backup</li>
+            <li>+ Quiet, Private Home Office</li>
+            <li>+ US Business Hours / Night Shift Ready</li>
+            <li>+ General Santos City, Philippines</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container footer-row">
+      <span>Melvin P. Exiomo &mdash; Technical Support &amp; Production Operations Specialist</span>
+      <span>Observability Lab uses simulated frontend data for demonstration purposes</span>
+    </div>
+  </footer>
+
+  <!-- GLASSMORPHIC MODAL -->
+  <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true">
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-head">
+        <div>
+          <div class="mono badge-cyan" style="font-size: 0.68rem;" id="modalKicker">DETAIL VIEW</div>
+          <h3 id="modalTitle" style="font-size: 1.08rem;">Modal Title</h3>
+        </div>
+        <button class="modal-close" id="modalCloseBtn" aria-label="Close modal">X</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+      <div class="modal-footer-nav" id="modalFooterNav" style="display: none;">
+        <button class="btn btn-secondary" id="modalPrevBtn" style="padding: 0.42rem 0.9rem; font-size: 0.78rem;">&larr; Previous Case Study</button>
+        <button class="btn btn-secondary" id="modalNextBtn" style="padding: 0.42rem 0.9rem; font-size: 0.78rem;">Next Case Study &rarr;</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================================
+    // 1. THREE.JS 3D FLOATING GEOMETRIC CUBES & FUTURISTIC SHAPES
+    // =========================================================================
+    (function initThreeBackground() {
+      const canvas = document.getElementById('three-bg');
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!canvas || typeof THREE === 'undefined' || prefersReduced) return;
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 100);
+      camera.position.z = 26;
+
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+
+      const group = new THREE.Group();
+      scene.add(group);
+
+      const shapes = [];
+      const blueEdgeMat = new THREE.LineBasicMaterial({ color: 0x2583E8, transparent: true, opacity: 0.24 });
+      const cyanEdgeMat = new THREE.LineBasicMaterial({ color: 0x20C5D9, transparent: true, opacity: 0.22 });
+      const fillMat = new THREE.MeshBasicMaterial({ color: 0x0D1B2A, transparent: true, opacity: 0.28 });
+
+      for (let i = 0; i < 12; i++) {
+        const size = 1.1 + Math.random() * 1.9;
+        const boxGeo = new THREE.BoxGeometry(size, size, size);
+        const edgesGeo = new THREE.EdgesGeometry(boxGeo);
+        const mesh = new THREE.Mesh(boxGeo, fillMat);
+        const wire = new THREE.LineSegments(edgesGeo, i % 3 === 0 ? cyanEdgeMat : blueEdgeMat);
+        mesh.add(wire);
+
+        mesh.position.set(
+          (Math.random() - 0.5) * 44,
+          (Math.random() - 0.5) * 28,
+          (Math.random() - 0.5) * 16 - 4
+        );
+        mesh.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, 0);
+
+        shapes.push({
+          obj: mesh,
+          baseX: mesh.position.x,
+          baseY: mesh.position.y,
+          rx: (Math.random() - 0.5) * 0.004,
+          ry: (Math.random() - 0.5) * 0.005,
+          phase: Math.random() * Math.PI * 2,
+          amp: 0.35 + Math.random() * 0.45,
+          depthFactor: 0.6 + Math.random() * 1.1
+        });
+        group.add(mesh);
+      }
+
+      const polyGeos = [
+        new THREE.OctahedronGeometry(2.6, 0),
+        new THREE.IcosahedronGeometry(2.8, 0),
+        new THREE.OctahedronGeometry(2.1, 0)
+      ];
+      const polyPos = [[-15, 7, -6], [16, -6, -5], [4, 11, -9]];
+
+      polyGeos.forEach((geo, idx) => {
+        const edges = new THREE.EdgesGeometry(geo);
+        const line = new THREE.LineSegments(edges, idx === 1 ? cyanEdgeMat : blueEdgeMat);
+        line.position.set(polyPos[idx][0], polyPos[idx][1], polyPos[idx][2]);
+        shapes.push({
+          obj: line,
+          baseX: line.position.x,
+          baseY: line.position.y,
+          rx: 0.0022,
+          ry: 0.0032,
+          phase: idx * 2.1,
+          amp: 0.55,
+          depthFactor: 1.2
+        });
+        group.add(line);
+      });
+
+      let targetMx = 0;
+      let targetMy = 0;
+      let curMx = 0;
+      let curMy = 0;
+      let scrollOffset = 0;
+
+      window.addEventListener('mousemove', (e) => {
+        targetMx = (e.clientX / window.innerWidth - 0.5) * 2;
+        targetMy = (e.clientY / window.innerHeight - 0.5) * 2;
+      }, { passive: true });
+
+      window.addEventListener('scroll', () => {
+        scrollOffset = window.scrollY * 0.003;
+      }, { passive: true });
+
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+
+      const clock = new THREE.Clock();
+      function animate() {
+        requestAnimationFrame(animate);
+        const t = clock.getElapsedTime();
+
+        curMx += (targetMx - curMx) * 0.04;
+        curMy += (targetMy - curMy) * 0.04;
+
+        shapes.forEach((s) => {
+          s.obj.rotation.x += s.rx;
+          s.obj.rotation.y += s.ry;
+          s.obj.position.y = s.baseY + Math.sin(t * 0.65 + s.phase) * s.amp + scrollOffset * 0.45;
+          s.obj.position.x = s.baseX + curMx * s.depthFactor * 1.1;
+        });
+
+        camera.position.x = curMx * 1.2;
+        camera.position.y = -curMy * 0.9;
+        camera.lookAt(0, 0, 0);
+        renderer.render(scene, camera);
+      }
+      animate();
+    })();
+
+    // =========================================================================
+    // 2. MOUSE INTERACTION: CURSOR-FOLLOWING RADIAL GLOW & CARD SPOTLIGHT
+    // =========================================================================
+    const isTouch = window.matchMedia('(pointer: coarse)').matches;
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const cursorGlow = document.getElementById('cursorGlow');
+
+    if (!isTouch && !prefersReduced && cursorGlow) {
+      let gx = window.innerWidth / 2;
+      let gy = window.innerHeight / 2;
+      let tx = gx;
+      let ty = gy;
+
+      window.addEventListener('mousemove', (e) => {
+        tx = e.clientX;
+        ty = e.clientY;
+      }, { passive: true });
+
+      function updateCursorGlow() {
+        gx += (tx - gx) * 0.14;
+        gy += (ty - gy) * 0.14;
+        cursorGlow.style.setProperty('--gx', `${gx}px`);
+        cursorGlow.style.setProperty('--gy', `${gy}px`);
+        requestAnimationFrame(updateCursorGlow);
+      }
+      updateCursorGlow();
+
+      document.querySelectorAll('.hover-card').forEach((card) => {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          card.style.setProperty('--mx', `${e.clientX - rect.left}px`);
+          card.style.setProperty('--my', `${e.clientY - rect.top}px`);
+        }, { passive: true });
+      });
+    }
+
+    // =========================================================================
+    // 3. SCROLL PROGRESS, REVEAL ANIMATIONS & SCROLLSPY
+    // =========================================================================
+    const scrollProgress = document.getElementById('scrollProgress');
+    window.addEventListener('scroll', () => {
+      const h = document.documentElement;
+      const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+      scrollProgress.style.width = `${Math.min(100, Math.max(0, pct))}%`;
+    }, { passive: true });
+
+    document.querySelectorAll('.stagger-group').forEach((group) => {
+      group.querySelectorAll('.reveal, .reveal-scale').forEach((child, idx) => {
+        child.style.setProperty('--reveal-delay', `${idx * 70}ms`);
+      });
+    });
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          entry.target.querySelectorAll('.bar-fill[data-target]').forEach((bar) => {
+            bar.style.width = bar.dataset.target;
+          });
+        }
+      });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll('.reveal, .reveal-scale').forEach((el) => revealObserver.observe(el));
+
+    setTimeout(() => {
+      document.querySelectorAll('.hero-dash .bar-fill[data-target]').forEach((bar) => {
+        bar.style.width = bar.dataset.target;
+      });
+    }, 180);
+
+    const spyLinks = document.querySelectorAll('[data-spy]');
+    const spyObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          spyLinks.forEach((a) => a.classList.toggle('active', a.dataset.spy === id));
+        }
+      });
+    }, { rootMargin: '-30% 0px -55% 0px' });
+
+    document.querySelectorAll('section[id]').forEach((sec) => spyObserver.observe(sec));
+
+    const menuBtn = document.getElementById('menuBtn');
+    const navLinks = document.getElementById('navLinks');
+    menuBtn.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+    const copyEmailBtn = document.getElementById('copyEmailBtn');
+    const emailLabel = document.getElementById('emailLabel');
+    copyEmailBtn.addEventListener('click', () => {
+      const email = copyEmailBtn.dataset.email;
+      navigator.clipboard.writeText(email).then(() => {
+        emailLabel.textContent = 'Copied to Clipboard';
+        setTimeout(() => { emailLabel.textContent = email; }, 2000);
+      });
+    });
+
+    // =========================================================================
+    // 4. EXPERIENCE CONSOLE (CATEGORIES A-E TABS + EXPAND ALL TOGGLE)
+    // =========================================================================
+    const opsTabs = document.querySelectorAll('.ops-tab');
+    const opsPanes = document.querySelectorAll('.ops-pane');
+    const opsBody = document.getElementById('opsBody');
+    const opsExpandBtn = document.getElementById('opsExpandBtn');
+    let opsAllExpanded = false;
+
+    opsTabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        if (opsAllExpanded) {
+          opsAllExpanded = false;
+          opsBody.classList.remove('ops-all-stack');
+          opsExpandBtn.textContent = 'Expand All A–E';
+        }
+        opsTabs.forEach((t) => t.classList.remove('active'));
+        opsPanes.forEach((p) => p.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById(tab.dataset.ops).classList.add('active');
+      });
+    });
+
+    opsExpandBtn.addEventListener('click', () => {
+      opsAllExpanded = !opsAllExpanded;
+      opsBody.classList.toggle('ops-all-stack', opsAllExpanded);
+      opsExpandBtn.textContent = opsAllExpanded ? 'Collapse to Tabs' : 'Expand All A–E';
+    });
+
+    // =========================================================================
+    // 5. WORKFLOW ARCHITECTURE STEPPER
+    // =========================================================================
+    const wfSteps = [
+      {
+        title: 'STAGE 01 — L1 FRONTLINE SUPPORT',
+        desc: 'Captures initial customer symptom via chat, email, or CRM; performs basic account verification and escalates unresolved technical faults to L2.',
+        tools: 'Tools: Missive · Pipedrive · CRM · Zendesk / Jira'
+      },
+      {
+        title: 'STAGE 02 — L2 TECHNICAL OPERATIONS (CORE ROLE)',
+        desc: 'Validates customer impact, isolates operational requests (refunds, terminations, permissions) vs. platform defects, and initiates structured investigation.',
+        tools: 'Tools: Jira · Slack / Google Chat · OpsGenie · CRM'
+      },
+      {
+        title: 'STAGE 03 — MONITORING & LOG INVESTIGATION',
+        desc: 'Checks Grafana/VictoriaMetrics for 5xx spikes or resource saturation, searches VictoriaLogs/OpenSearch by trace ID, and reproduces API calls in Postman.',
+        tools: 'Tools: Grafana · VictoriaMetrics · VictoriaLogs · OpenSearch · Postman'
+      },
+      {
+        title: 'STAGE 04 — L3 ENGINEERING ESCALATION',
+        desc: 'Packages verified root-cause evidence, masked production logs, correlation IDs, and exact reproduction steps into a developer-ready Jira defect.',
+        tools: 'Tools: Jira · Anonymized Logs · API Payloads · Slack Coordination'
+      },
+      {
+        title: 'STAGE 05 — SERVICE RECOVERY & VALIDATION',
+        desc: 'Coordinates maintenance or traffic restoration, verifies ArgoCD sync state, executes post-fix smoke tests, and updates internal KBs for L1 deflection.',
+        tools: 'Tools: ArgoCD Verification · Grafana Telemetry · Confluence KB'
+      }
+    ];
+
+    const wfNodes = document.querySelectorAll('.wf-node');
+    wfNodes.forEach((node) => {
+      node.addEventListener('click', () => {
+        wfNodes.forEach((n) => n.classList.remove('active'));
+        node.classList.add('active');
+        const d = wfSteps[parseInt(node.dataset.step, 10)];
+        document.getElementById('wfDetailTitle').textContent = d.title;
+        document.getElementById('wfDetailDesc').textContent = d.desc;
+        document.getElementById('wfDetailTools').textContent = d.tools;
+      });
+    });
+
+    // =========================================================================
+    // 6. OBSERVABILITY LAB: GRAFANA, VICTORIALOGS & OPENSEARCH
+    // =========================================================================
+    const labTabs = document.querySelectorAll('.lab-tab');
+    const labPanels = document.querySelectorAll('.lab-panel');
+    labTabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        labTabs.forEach((t) => t.classList.remove('active'));
+        labPanels.forEach((p) => p.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById(tab.dataset.lab).classList.add('active');
+      });
+    });
+
+    const grafData = {
+      '15m': { avail: '99.96%', r2: '99.58%', r4: '0.35%', r5: '0.07%', lat: '128ms', rps: '1,620 req/s', cpu: '38.4%', mem: '62.1%',
+        p2: 'M0,30 L55,28 L110,29 L165,25 L220,27 L275,23 L330,25 L385,22 L440,21',
+        p5: 'M0,109 L55,109 L110,108 L165,98 L220,109 L275,109 L330,108 L385,109 L440,109' },
+      '1h':  { avail: '99.94%', r2: '99.41%', r4: '0.47%', r5: '0.12%', lat: '142ms', rps: '1,840 req/s', cpu: '41.2%', mem: '64.8%',
+        p2: 'M0,34 L55,30 L110,33 L165,24 L220,29 L275,22 L330,27 L385,20 L440,23',
+        p5: 'M0,108 L55,109 L110,107 L165,78 L220,104 L275,108 L330,107 L385,109 L440,108' },
+      '6h':  { avail: '99.91%', r2: '99.28%', r4: '0.54%', r5: '0.18%', lat: '164ms', rps: '2,110 req/s', cpu: '47.6%', mem: '68.2%',
+        p2: 'M0,40 L55,34 L110,28 L165,22 L220,32 L275,25 L330,29 L385,24 L440,26',
+        p5: 'M0,106 L55,105 L110,84 L165,70 L220,102 L275,106 L330,104 L385,106 L440,105' },
+      '24h': { avail: '99.95%', r2: '99.49%', r4: '0.41%', r5: '0.10%', lat: '136ms', rps: '1,950 req/s', cpu: '43.0%', mem: '65.4%',
+        p2: 'M0,45 L55,38 L110,30 L165,26 L220,24 L275,28 L330,22 L385,25 L440,22',
+        p5: 'M0,108 L55,107 L110,105 L165,86 L220,106 L275,108 L330,106 L385,107 L440,108' }
+    };
+
+    function updateGrafanaView() {
+      const range = document.querySelector('#grafTimeBtns .t-btn.active').dataset.t;
+      const svc = document.getElementById('grafSvcSelect').value;
+      const d = grafData[range];
+      const mult = svc === 'esim' ? '188ms' : svc === 'ocf' ? '92ms' : d.lat;
+      document.getElementById('gAvail').textContent = svc === 'esim' ? '99.72%' : d.avail;
+      document.getElementById('g2xx').textContent = d.r2;
+      document.getElementById('g4xx').textContent = d.r4;
+      document.getElementById('g5xx').textContent = svc === 'esim' ? '0.28%' : d.r5;
+      document.getElementById('gLat').textContent = mult;
+      document.getElementById('gRps').textContent = svc === 'all' ? d.rps : svc === 'ocf' ? '1,210 req/s' : '310 req/s';
+      document.getElementById('gCpuText').textContent = d.cpu;
+      document.getElementById('gMemText').textContent = d.mem;
+      document.getElementById('gHttp2xx').setAttribute('d', d.p2);
+      document.getElementById('gHttp5xx').setAttribute('d', d.p5);
+    }
+
+    document.querySelectorAll('#grafTimeBtns .t-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#grafTimeBtns .t-btn').forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+        updateGrafanaView();
+      });
+    });
+    document.getElementById('grafSvcSelect').addEventListener('change', updateGrafanaView);
+
+    const simLogs = [
+      {
+        ts: '2026-11-22T09:42:18.412Z',
+        bucket: '09:40',
+        sev: 'ERROR',
+        svc: 'esim-orchestrator',
+        reqId: 'req-99a8f12c',
+        traceId: 'trc-8810e2d1',
+        status: 504,
+        msg: '[EXTERNAL_API_FAIL] Request failed: timeout (30000ms) on _api_v3_ossgomo_smdp_request_profile',
+        doc: {
+          '@timestamp': '2026-11-22T09:42:18.412Z',
+          severity: 'ERROR',
+          service: 'esim-orchestrator',
+          route: 'POST /api/v3/ossgomo/smdp/request_profile',
+          endpoint_name: 'generate_esim_profile',
+          upstream_url: 'https://smdp-partner.internal/executeActions/v1/prepareReleaseICCID',
+          timeOut: 30000,
+          http_status: 504,
+          request_id: 'req-99a8f12c',
+          trace_id: 'trc-8810e2d1',
+          payload_masked: {
+            iccid: '8963426169**********',
+            primaryMsisdn: '9760******',
+            pii_status: 'REDACTED_FOR_SECURITY'
+          }
+        }
+      },
+      {
+        ts: '2026-11-22T09:42:19.004Z',
+        bucket: '09:40',
+        sev: 'ERROR',
+        svc: 'api-gateway',
+        reqId: 'req-99a8f12c',
+        traceId: 'trc-8810e2d1',
+        status: 504,
+        msg: 'Upstream gateway timeout propagated to client (504 Gateway Timeout)',
+        doc: {
+          '@timestamp': '2026-11-22T09:42:19.004Z',
+          severity: 'ERROR',
+          service: 'api-gateway',
+          request_id: 'req-99a8f12c',
+          trace_id: 'trc-8810e2d1',
+          http_status: 504,
+          elapsed_ms: 30014,
+          downstream: 'esim-orchestrator'
+        }
+      },
+      {
+        ts: '2026-11-22T09:43:05.118Z',
+        bucket: '09:40',
+        sev: 'WARN',
+        svc: 'api-gateway',
+        reqId: 'req-4490c18b',
+        traceId: 'trc-4490c18b',
+        status: 422,
+        msg: 'HTTP 422 ERR_INVALID_OFFER_STATE — Offer mismatch for subscriber tier (GFIBER_100M)',
+        doc: {
+          '@timestamp': '2026-11-22T09:43:05.118Z',
+          severity: 'WARN',
+          service: 'api-gateway',
+          route: 'POST /api/v3/orderoe/create_order_external',
+          http_status: 422,
+          error_code: 'ERR_INVALID_OFFER_STATE',
+          request_id: 'req-4490c18b',
+          trace_id: 'trc-4490c18b',
+          subscriber_id: 'SUB-9707******'
+        }
+      },
+      {
+        ts: '2026-11-22T09:44:22.740Z',
+        bucket: '09:40',
+        sev: 'WARN',
+        svc: 'esim-orchestrator',
+        reqId: 'req-7721b90e',
+        traceId: 'trc-7721b90e',
+        status: 401,
+        msg: 'HTTP 401 Unauthorized — HS256 JWT exp timestamp drift (-412s)',
+        doc: {
+          '@timestamp': '2026-11-22T09:44:22.740Z',
+          severity: 'WARN',
+          service: 'esim-orchestrator',
+          http_status: 401,
+          auth_scheme: 'HS256_JWT',
+          request_id: 'req-7721b90e',
+          trace_id: 'trc-7721b90e'
+        }
+      },
+      {
+        ts: '2026-11-22T09:46:10.312Z',
+        bucket: '09:45',
+        sev: 'INFO',
+        svc: 'billing-worker',
+        reqId: 'req-6120d4a1',
+        traceId: 'trc-6120d4a1',
+        status: 200,
+        msg: 'Batch refund validation settled via idempotency_key=8a2f1c (200 OK)',
+        doc: {
+          '@timestamp': '2026-11-22T09:46:10.312Z',
+          severity: 'INFO',
+          service: 'billing-worker',
+          http_status: 200,
+          kafka_lag: 12,
+          request_id: 'req-6120d4a1',
+          trace_id: 'trc-6120d4a1'
+        }
+      },
+      {
+        ts: '2026-11-22T09:47:02.905Z',
+        bucket: '09:45',
+        sev: 'INFO',
+        svc: 'ocf-diameter-gw',
+        reqId: 'req-5501a3c9',
+        traceId: 'trc-5501a3c9',
+        status: 200,
+        msg: 'Diameter CCR/CCA SYNC healthy across dc95 (ocf_gy: 99.9%, ocf_sy: 100.0%)',
+        doc: {
+          '@timestamp': '2026-11-22T09:47:02.905Z',
+          severity: 'INFO',
+          service: 'ocf-diameter-gw',
+          dc: 'dc95',
+          active_sessions: '2056K',
+          request_id: 'req-5501a3c9',
+          trace_id: 'trc-5501a3c9'
+        }
+      }
+    ];
+
+    function renderVlogs() {
+      const qRaw = document.getElementById('vlogsQuery').value.trim().toLowerCase();
+      const sev = document.getElementById('vlogsSev').value;
+      const svc = document.getElementById('vlogsSvc').value;
+      const tbody = document.getElementById('vlogsTbody');
+      tbody.innerHTML = '';
+
+      const cleanTerm = qRaw.replace('_time:1h', '').replace('err_msg:', '').replace('status:', '').replace('trace_id:', '').trim();
+
+      const filtered = simLogs.filter((row) => {
+        if (sev !== 'ALL' && row.sev !== sev) return false;
+        if (svc !== 'ALL' && row.svc !== svc) return false;
+        if (cleanTerm && !JSON.stringify(row).toLowerCase().includes(cleanTerm)) return false;
+        return true;
+      });
+
+      if (!filtered.length) {
+        tbody.innerHTML = '<tr><td colspan="6" style="color: var(--muted);">No matching log records found for query.</td></tr>';
+        return;
+      }
+
+      filtered.forEach((row) => {
+        const tr = document.createElement('tr');
+        tr.className = 'log-row';
+        tr.innerHTML = `
+          <td>${row.ts}</td>
+          <td><span class="sev-tag sev-${row.sev}">${row.sev}</span></td>
+          <td>${row.svc}</td>
+          <td style="color: var(--cyan);">${row.reqId}</td>
+          <td style="color: var(--blue);">${row.traceId}</td>
+          <td>${row.msg}</td>
+        `;
+        const expTr = document.createElement('tr');
+        expTr.className = 'log-expand-row';
+        expTr.style.display = 'none';
+        expTr.innerHTML = `<td colspan="6"><div class="log-expand-box">${JSON.stringify(row.doc, null, 2)}</div></td>`;
+        tr.addEventListener('click', () => {
+          expTr.style.display = expTr.style.display === 'none' ? 'table-row' : 'none';
+        });
+        tbody.appendChild(tr);
+        tbody.appendChild(expTr);
+      });
+    }
+
+    document.getElementById('vlogsRunBtn').addEventListener('click', renderVlogs);
+    document.getElementById('vlogsSev').addEventListener('change', renderVlogs);
+    document.getElementById('vlogsSvc').addEventListener('change', renderVlogs);
+    document.getElementById('vlogsQuery').addEventListener('keydown', (e) => { if (e.key === 'Enter') renderVlogs(); });
+    document.querySelectorAll('.q-chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        document.getElementById('vlogsQuery').value = chip.dataset.q;
+        renderVlogs();
+      });
+    });
+    renderVlogs();
+
+    let osSevFilter = 'ALL';
+    let osSvcFilter = 'ALL';
+
+    function renderOpenSearch() {
+      const q = document.getElementById('osQuery').value.trim().toLowerCase();
+      const timeF = document.getElementById('osTimeFilter').value;
+      const tbody = document.getElementById('osTbody');
+      const jsonView = document.getElementById('osJsonView');
+      tbody.innerHTML = '';
+
+      const cleanQ = (q === 'status:>=400 or service:*') ? '' : q;
+      const filtered = simLogs.filter((row) => {
+        if (osSevFilter !== 'ALL' && row.sev !== osSevFilter) return false;
+        if (osSvcFilter !== 'ALL' && row.svc !== osSvcFilter) return false;
+        if (timeF !== 'ALL' && row.bucket !== timeF) return false;
+        if (cleanQ && !JSON.stringify(row.doc).toLowerCase().includes(cleanQ)) return false;
+        return true;
+      });
+
+      document.getElementById('osHitCount').textContent = `${filtered.length} hits`;
+      if (!filtered.length) {
+        tbody.innerHTML = '<tr><td colspan="4" style="color: var(--muted);">0 documents matched filters.</td></tr>';
+        jsonView.textContent = '// Select a document row to inspect JSON fields';
+        return;
+      }
+
+      jsonView.textContent = JSON.stringify(filtered[0].doc, null, 2);
+      filtered.forEach((row) => {
+        const tr = document.createElement('tr');
+        tr.className = 'log-row';
+        tr.innerHTML = `
+          <td>${row.ts.split('T')[1].replace('Z', '')}</td>
+          <td><span class="sev-tag sev-${row.sev}">${row.sev}</span></td>
+          <td>${row.svc}</td>
+          <td>${row.msg}</td>
+        `;
+        tr.addEventListener('click', () => {
+          jsonView.textContent = JSON.stringify(row.doc, null, 2);
+        });
+        tbody.appendChild(tr);
+      });
+    }
+
+    document.querySelectorAll('[data-os-sev]').forEach((b) => {
+      b.addEventListener('click', () => {
+        document.querySelectorAll('[data-os-sev]').forEach((x) => x.classList.remove('active'));
+        b.classList.add('active');
+        osSevFilter = b.dataset.osSev;
+        renderOpenSearch();
+      });
+    });
+
+    document.querySelectorAll('[data-os-svc]').forEach((b) => {
+      b.addEventListener('click', () => {
+        document.querySelectorAll('[data-os-svc]').forEach((x) => x.classList.remove('active'));
+        b.classList.add('active');
+        osSvcFilter = b.dataset.osSvc;
+        renderOpenSearch();
+      });
+    });
+
+    document.getElementById('osTimeFilter').addEventListener('change', renderOpenSearch);
+    document.getElementById('osSearchBtn').addEventListener('click', renderOpenSearch);
+    document.getElementById('osQuery').addEventListener('keydown', (e) => { if (e.key === 'Enter') renderOpenSearch(); });
+    renderOpenSearch();
+
+    // =========================================================================
+    // 7. CASE STUDIES, INTERACTIVE PROJECTS & RESUME MODALS
+    // =========================================================================
+    const caseKeys = ['cs1', 'cs2', 'cs3', 'cs4', 'cs5'];
+    let activeCaseIndex = -1;
+
+    const caseDetails = {
+      cs1: {
+        kicker: 'CASE STUDY 01 // ILLUSTRATIVE DEMONSTRATION',
+        title: 'Production Service Degradation Investigation',
+        env: 'Telecom SaaS Platform (Grafana, VictoriaMetrics, VictoriaLogs, Kubernetes Pods)',
+        tools: 'Grafana, VictoriaMetrics (PromQL), VictoriaLogs',
+        problem: 'Automated alert triggered on elevated HTTP 5xx error rates (0.12% -> 3.4% over 5 minutes) affecting subscriber eSIM profile generation requests.',
+        process: [
+          'Opened Grafana service overview dashboard and confirmed HTTP 5xx spike isolated to esim-orchestrator while ocf_gy (99.9%) and ocf_sy (100.0%) Diameter nodes remained healthy.',
+          'Checked VictoriaMetrics CPU/Memory and Kafka consumer lag (lag: 12) to rule out internal compute saturation or queue backpressure.',
+          'Queried VictoriaLogs for status:504 within the spike window, extracted failing trace_ids, and confirmed internal service execution completed in <45ms before external gateway timeout.',
+          'Compiled correlated metrics and anonymized log traces into an escalation summary for L3 and upstream partner teams.'
+        ],
+        findings: 'Degradation was caused by an external upstream SMDP+ dependency stalling beyond the 30,000ms request timeout rather than internal DNO™ pod failure.',
+        resolution: 'Escalated to L3 engineering and telecom partner liaison with Grafana snapshots and trace IDs; monitored recovery until 5xx returned to baseline (<0.1%).',
+        lessons: 'Separating internal pod telemetry from upstream dependency latency immediately prevents wasted restarts and speeds up partner-side mitigation.'
+      },
+      cs2: {
+        kicker: 'CASE STUDY 02 // ILLUSTRATIVE DEMONSTRATION',
+        title: 'Distributed Log Analysis',
+        env: 'Nginx/Lua API Gateway + Microservices (VictoriaLogs, LogsQL, OpenSearch)',
+        tools: 'VictoriaLogs, LogsQL, OpenSearch',
+        problem: 'Multiple L1 tickets reported intermittent provisioning failures without clear error messages on the customer-facing app.',
+        process: [
+          'Searched OpenSearch and VictoriaLogs using LogsQL filters for the affected route (_api_v3_ossgomo_smdp_request_profile).',
+          'Correlated request_id (req-99a8f12c) and trace_id (trc-8810e2d1) across api-gateway and esim-orchestrator log streams.',
+          'Identified [EXTERNAL_API_FAIL] Request failed: timeout (timeOut: 30000) against .../prepareReleaseICCID alongside secondary 422 validation errors on separate retry calls.',
+          'Redacted customer PII ("iccid": "8963426169**********", "primaryMsisdn": "9760******") before attaching log evidence to Jira.'
+        ],
+        findings: 'Distinguished two distinct failure modes: upstream 504 SMDP+ socket timeouts vs. client-side retry calls hitting 422 ERR_INVALID_OFFER_STATE.',
+        resolution: 'Escalated external 504 traces to partner liaison while providing L1 teams with clear guidance to check provisioning state before initiating manual retries or refunds.',
+        lessons: 'Strict trace ID correlation and PII redaction allow engineering teams to debug distributed failures rapidly while preserving customer data hygiene.'
+      },
+      cs3: {
+        kicker: 'CASE STUDY 03 // ILLUSTRATIVE DEMONSTRATION',
+        title: 'API Troubleshooting',
+        env: 'RESTful Provisioning & Order Management APIs (Postman, HTTP, HS256 JWT)',
+        tools: 'Postman, REST APIs, HTTP Diagnostics',
+        problem: 'Operational extension and activation requests returned HTTP 401 Unauthorized and HTTP 422 Unprocessable Entity during subscriber plan updates.',
+        process: [
+          'Captured the failing request headers and JSON body and reproduced the call inside a controlled Postman collection.',
+          'Inspected the Authorization Bearer HS256 JWT claims and identified an expired epoch timestamp (-412s drift) causing HTTP 401 rejections.',
+          'After refreshing the token, re-tested the payload and observed HTTP 422 ERR_INVALID_OFFER_STATE caused by passing a 500 Mbps offer ID for a 100 Mbps subscriber tier.'
+        ],
+        findings: 'Both token expiration and offer-to-tier validation mismatches were deterministic client/payload configuration issues rather than platform bugs.',
+        resolution: 'Regenerated the signed JWT token, mapped the correct offer ID for the subscriber tier, re-executed the API call (200 OK), and documented payload validation rules.',
+        lessons: 'Always inspect HTTP response bodies and JWT claim timestamps in Postman before assuming backend service failure.'
+      },
+      cs4: {
+        kicker: 'CASE STUDY 04 // ILLUSTRATIVE DEMONSTRATION',
+        title: 'Production Workflow Recovery',
+        env: 'Asynchronous Subscriber Provisioning Orchestrator & Jira Operations',
+        tools: 'Jira, Workflow Orchestration, Postman',
+        problem: 'Subscriber activation orders remained stuck in a PENDING_PROVISIONING state following a brief downstream network interruption.',
+        process: [
+          'Audited stalled workflow IDs reported via L1 Jira escalations and cross-checked execution history in backend logs.',
+          'Confirmed the initial downstream callback timed out cleanly without creating duplicate billing ledger entries.',
+          'Followed authorized L2 recovery SOPs to trigger idempotent workflow re-execution via API and tracked state transitions.'
+        ],
+        findings: 'Asynchronous steps halted safely at the external acknowledgment gate; no data corruption occurred in subscriber or billing tables.',
+        resolution: 'Executed authorized workflow recovery for affected accounts, verified status transitioned to ACTIVE, and confirmed service restoration with L1.',
+        lessons: 'Verifying idempotency and billing state prior to workflow recovery prevents duplicate charges and ensures clean state reconciliation.'
+      },
+      cs5: {
+        kicker: 'CASE STUDY 05 // ILLUSTRATIVE DEMONSTRATION',
+        title: 'Incident Management',
+        env: 'Multi-Tier Support Operations (Jira, Grafana, Slack, OpsGenie)',
+        tools: 'Jira, Grafana, Slack, OpsGenie',
+        problem: 'High-priority regional connectivity and login failures surfaced simultaneously across frontline L1 channels.',
+        process: [
+          'Triaged incoming OpsGenie alerts and L1 escalations, assessing subscriber scope to classify the incident as P1/P2.',
+          'Checked Grafana router IP health and regional error panels to determine whether impact was localized or global.',
+          'Posted structured status updates in incident Slack channels while packaging log evidence for L3 engineering.',
+          'Monitored post-mitigation telemetry, ran smoke validation checks, and authored a concise post-incident KB summary.'
+        ],
+        findings: 'Cross-country authentication latency correlated with an upstream routing change affecting specific regional IP ranges.',
+        resolution: 'Coordinated timely L3 mitigation and verified full login recovery across monitored Grafana metrics before closing the incident ticket.',
+        lessons: 'Clear communication cadence between L1, L2, and L3 reduces duplicate tickets and accelerates end-to-end MTTR.'
+      }
+    };
+
+    const modalBackdrop = document.getElementById('modalBackdrop');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalKicker = document.getElementById('modalKicker');
+    const modalBody = document.getElementById('modalBody');
+    const modalCloseBtn = document.getElementById('modalCloseBtn');
+    const modalFooterNav = document.getElementById('modalFooterNav');
+    const modalPrevBtn = document.getElementById('modalPrevBtn');
+    const modalNextBtn = document.getElementById('modalNextBtn');
+
+    function openCaseModal(id) {
+      const c = caseDetails[id];
+      if (!c) return;
+      activeCaseIndex = caseKeys.indexOf(id);
+      modalFooterNav.style.display = 'flex';
+      modalPrevBtn.disabled = activeCaseIndex === 0;
+      modalNextBtn.disabled = activeCaseIndex === caseKeys.length - 1;
+      modalPrevBtn.style.opacity = modalPrevBtn.disabled ? '0.4' : '1';
+      modalNextBtn.style.opacity = modalNextBtn.disabled ? '0.4' : '1';
+
+      modalKicker.textContent = c.kicker;
+      modalTitle.textContent = c.title;
+      modalBody.innerHTML = `
+        <div class="cs-detail-grid">
+          <div class="cs-block cs-block-full">
+            <div class="cs-lbl">Problem Description</div>
+            <p>${c.problem}</p>
+          </div>
+          <div class="cs-block">
+            <div class="cs-lbl">Technical Environment</div>
+            <p>${c.env}</p>
+          </div>
+          <div class="cs-block">
+            <div class="cs-lbl">Tools Used</div>
+            <p>${c.tools}</p>
+          </div>
+          <div class="cs-block cs-block-full">
+            <div class="cs-lbl">Investigation Process</div>
+            <ol>${c.process.map((step) => `<li>${step}</li>`).join('')}</ol>
+          </div>
+          <div class="cs-block">
+            <div class="cs-lbl">Findings</div>
+            <p>${c.findings}</p>
+          </div>
+          <div class="cs-block">
+            <div class="cs-lbl">Resolution / Escalation</div>
+            <p>${c.resolution}</p>
+          </div>
+          <div class="cs-block cs-block-full">
+            <div class="cs-lbl">Lessons Learned</div>
+            <p>${c.lessons}</p>
+          </div>
+        </div>
+      `;
+      showModal();
+    }
+
+    modalPrevBtn.addEventListener('click', () => {
+      if (activeCaseIndex > 0) openCaseModal(caseKeys[activeCaseIndex - 1]);
+    });
+    modalNextBtn.addEventListener('click', () => {
+      if (activeCaseIndex < caseKeys.length - 1) openCaseModal(caseKeys[activeCaseIndex + 1]);
+    });
+
+    function openProjectModal(projId) {
+      modalFooterNav.style.display = 'none';
+      if (projId === 'gfiber') {
+        modalKicker.textContent = 'INTERACTIVE GUI SIMULATOR // PYTHON + HS256 JWT';
+        modalTitle.textContent = 'GFiber Promo Extension Automation Tool';
+        modalBody.innerHTML = `
+          <div class="gui-grid">
+            <div>
+              <div class="cs-lbl">Days to Extend</div>
+              <input class="gui-input" id="gfDays" type="number" min="1" max="90" value="7" />
+            </div>
+            <div>
+              <div class="cs-lbl">Account ID</div>
+              <input class="gui-input" id="gfAcc" type="text" value="GFB-904821" />
+            </div>
+            <div>
+              <div class="cs-lbl">Plan Tier</div>
+              <select class="gui-input" id="gfPlan">
+                <option value="50">50 Mbps</option>
+                <option value="100" selected>100 Mbps</option>
+                <option value="300">300 Mbps</option>
+                <option value="500">500 Mbps</option>
+              </select>
+            </div>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.65rem; margin-bottom:0.85rem;">
+            <div style="display:flex; gap:0.5rem;">
+              <button class="btn btn-primary" id="gfRunBtn" style="padding:0.42rem 0.9rem; font-size:0.78rem;">Extend</button>
+              <button class="btn btn-secondary" id="gfClearBtn" style="padding:0.42rem 0.9rem; font-size:0.78rem;">Clear Table</button>
+            </div>
+            <span class="mono" style="font-size:0.74rem; color:var(--cyan);" id="gfStatus">HS256 JWT Signed &middot; Ready</span>
+          </div>
+          <div class="svc-table-wrap">
+            <table class="obs-table">
+              <thead><tr><th>Order ID</th><th>Days</th><th>Offer ID</th><th>Result Logs</th><th>Status</th></tr></thead>
+              <tbody id="gfTbody">
+                <tr><td>ORD-782104</td><td>7</td><td>EXT_GFIBER_100M_07D</td><td>{"code": 0, "jwt": "hs256_ok"}</td><td><span class="sev-tag sev-INFO">SUCCESS</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        `;
+        let ord = 782105;
+        modalBody.querySelector('#gfRunBtn').addEventListener('click', () => {
+          const days = Math.max(1, parseInt(modalBody.querySelector('#gfDays').value, 10) || 7);
+          const plan = modalBody.querySelector('#gfPlan').value;
+          const offer = `EXT_GFIBER_${plan}M_${String(days).padStart(2, '0')}D`;
+          const id = `ORD-${ord++}`;
+          const tr = document.createElement('tr');
+          tr.innerHTML = `<td>${id}</td><td>${days}</td><td>${offer}</td><td>{"code": 0, "jwt": "hs256_ok"}</td><td><span class="sev-tag sev-INFO">SUCCESS</span></td>`;
+          modalBody.querySelector('#gfTbody').prepend(tr);
+          modalBody.querySelector('#gfStatus').textContent = `Provisioned ${id} (${offer})`;
+        });
+        modalBody.querySelector('#gfClearBtn').addEventListener('click', () => {
+          modalBody.querySelector('#gfTbody').innerHTML = '';
+          modalBody.querySelector('#gfStatus').textContent = 'Table cleared';
+        });
+      } else if (projId === 'finops') {
+        modalKicker.textContent = 'INTERACTIVE VALIDATOR // FINOPS REST WORKFLOW';
+        modalTitle.textContent = 'API Troubleshooting & FinOps Refund Validator';
+        modalBody.innerHTML = `
+          <div style="display:flex; gap:0.65rem; flex-wrap:wrap; margin-bottom:0.85rem; align-items:flex-end;">
+            <div style="flex:1; min-width:180px;">
+              <div class="cs-lbl">Transaction Reference</div>
+              <input class="gui-input" id="rfRef" type="text" value="TXN-88419-DNO" />
+            </div>
+            <div style="flex:1; min-width:180px;">
+              <div class="cs-lbl">Reason</div>
+              <select class="gui-input" id="rfReason">
+                <option value="Billing Discrepancy">Billing Discrepancy</option>
+                <option value="Service Disruption">Service Disruption</option>
+              </select>
+            </div>
+            <button class="btn btn-primary" id="rfAddBtn" style="padding:0.48rem 0.95rem; font-size:0.78rem;">Validate &amp; Queue</button>
+          </div>
+          <div class="svc-table-wrap">
+            <table class="obs-table">
+              <thead><tr><th>Transaction</th><th>Reason</th><th>API Gateway Response</th><th>Status</th></tr></thead>
+              <tbody id="rfTbody">
+                <tr><td>TXN-88390-DNO</td><td>Billing Discrepancy</td><td>200 OK &middot; idemp_key=8a2f1c</td><td><span class="sev-tag sev-INFO">SETTLED</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        `;
+        modalBody.querySelector('#rfAddBtn').addEventListener('click', () => {
+          const ref = modalBody.querySelector('#rfRef').value.trim() || 'TXN-88419-DNO';
+          const reason = modalBody.querySelector('#rfReason').value;
+          const key = Math.random().toString(16).substring(2, 8);
+          const tr = document.createElement('tr');
+          tr.innerHTML = `<td>${ref}</td><td>${reason}</td><td>200 OK &middot; idemp_key=${key}</td><td><span class="sev-tag sev-INFO">SETTLED</span></td>`;
+          modalBody.querySelector('#rfTbody').prepend(tr);
+        });
+      }
+      showModal();
+    }
+
+    function openResumeModal() {
+      modalFooterNav.style.display = 'none';
+      modalKicker.textContent = 'RESUME PREVIEW // PRINT OR SAVE AS PDF';
+      modalTitle.textContent = 'Melvin P. Exiomo — Resume';
+      modalBody.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem; margin-bottom:1rem;">
+          <span class="mono" style="font-size:0.76rem; color:var(--muted);">General Santos City, PH &middot; melvinexiomo@gmail.com &middot; +63 970 701 6936</span>
+          <button class="btn btn-primary" onclick="window.print()" style="padding:0.45rem 0.9rem; font-size:0.78rem;">Print / Save as PDF</button>
+        </div>
+        <div class="cs-detail-grid">
+          <div class="cs-block cs-block-full">
+            <div class="cs-lbl">Profile</div>
+            <p>L2 Technical Support &amp; Production Operations Specialist experienced in telecom SaaS, cloud observability (Grafana, VictoriaMetrics, VictoriaLogs, OpenSearch), REST API troubleshooting (Postman), and Python internal support tooling.</p>
+          </div>
+          <div class="cs-block cs-block-full">
+            <div class="cs-lbl">Experience</div>
+            <ol>
+              <li><strong>Technical Support Engineer | Cloud Infrastructure</strong> &mdash; LotusFlare (DNO&trade; Cloud), Remote (Dec 2023 &ndash; Oct 2026): Supported Globe Telecom GFiber &amp; GOMO platforms; production monitoring, log tracing, Postman API recovery, L1/L3 coordination.</li>
+              <li><strong>Customer Service Representative</strong> &mdash; Sixeleven Global Services Inc. (Sep 2023 &ndash; Nov 2023): Omnichannel support with 93%+ QA and 90%+ CSAT.</li>
+              <li><strong>Industry Specialist &amp; Operations/Tech Intern</strong> &mdash; DTI XII (Jan 2023 &ndash; Jun 2024): Remote admin systems (90% participation), +30% event efficiency, live AV/hardware troubleshooting.</li>
+            </ol>
+          </div>
+          <div class="cs-block">
+            <div class="cs-lbl">Education</div>
+            <p>B.S. Economics (Cum Laude), MSU-General Santos.<br/>Doctor of Law (In Progress).</p>
+          </div>
+          <div class="cs-block">
+            <div class="cs-lbl">Certifications</div>
+            <p>CCNA: Intro to Networks, Networking Basics (Cisco); Bits &amp; Bytes of Computer Networking, Relational Database &amp; SQL, Google Data Analytics, Power BI (Coursera).</p>
+          </div>
+        </div>
+      `;
+      showModal();
+    }
+
+    function showModal() {
+      modalBackdrop.classList.add('open');
+      modalBackdrop.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('modal-open');
+    }
+
+    function closeModal() {
+      modalBackdrop.classList.remove('open');
+      modalBackdrop.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('modal-open');
+    }
+
+    document.querySelectorAll('[data-case]').forEach((card) => {
+      card.addEventListener('click', () => openCaseModal(card.dataset.case));
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openCaseModal(card.dataset.case); }
+      });
+    });
+
+    document.querySelectorAll('[data-proj]').forEach((card) => {
+      card.addEventListener('click', () => openProjectModal(card.dataset.proj));
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openProjectModal(card.dataset.proj); }
+      });
+    });
+
+    document.getElementById('openResumeBtn').addEventListener('click', openResumeModal);
+    document.getElementById('footerResumeBtn').addEventListener('click', openResumeModal);
+    modalCloseBtn.addEventListener('click', closeModal);
+    modalBackdrop.addEventListener('click', (e) => { if (e.target === modalBackdrop) closeModal(); });
+    window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modalBackdrop.classList.contains('open')) closeModal(); });
+  </script>
+</body>
+</html>
